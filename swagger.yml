@@ -1,0 +1,2406 @@
+openapi: 3.0.0
+info:
+  title: TESTD API
+  description: TESTD Swagger API documentation
+  version: 0.0.1
+servers:
+  - url: http://localhost:3001/api
+  - url: http://192.168.43.62:3001/api
+  - url: https://dev1.testd.com/api
+tags:
+  - name: Dashboard
+    description: TESTD | DB
+  - name: Mobile
+    description: TESTD | ID
+  - name: Schedule
+    description: Dashboard, Mobile, Twilio
+paths:
+  /login:
+    post:
+      summary: Login
+      tags:
+        - Dashboard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /add-credentials:
+    post:
+      summary: Add username password credentials
+      tags:
+        - Dashboard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - username
+                - password
+              properties:
+                email:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /account:
+    post:
+      summary: Create a new account
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Accounts"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    get:
+      summary: Get all accounts
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /account/{id}:
+    get:
+      summary: Get account by account id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    put:
+      summary: Update account by account id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Accounts"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    delete:
+      summary: Delete account by account id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /account/my-notifications:
+    get:
+      summary: Get account notifications
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /account/read-notifications/{notification_id}:
+    put:
+      summary: Update account notification as read
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      parameters:
+        - in: path
+          name: notification_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /sessions/{account_id}:
+    get:
+      summary: Get sessions by account id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      parameters:
+        - in: path
+          name: account_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /client/my:
+    get:
+      summary: Get my client
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /client/form-settings:
+    get:
+      summary: Get my form settings
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    put:
+      summary: Update my form settings
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FormSettings"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /add-client-name:
+    post:
+      summary: Add client name
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: Client name
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /user/login:
+    post:
+      summary: Login User
+      tags:
+        - Mobile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /user/fetch/{verification_id}:
+    get:
+      summary: Get user by verification_id
+      description: This API jwt will be static (called before login)
+      tags:
+        - Mobile
+      security:
+        - ApiJWTUser: []
+      parameters:
+        - in: path
+          name: verification_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /user/validate:
+    post:
+      summary: Validate user inputs
+      description: This API jwt will be static (called before login)
+      tags:
+        - Mobile
+      security:
+        - ApiJWTUser: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - phone
+              properties:
+                phone:
+                  type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /user/add-credentials:
+    post:
+      summary: Add user credentials
+      tags:
+        - Mobile
+      security:
+        - ApiJWTUser: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - password
+              properties:
+                id:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /user/update/{id}:
+    put:
+      summary: Update user by user id
+      tags:
+        - Mobile
+      security:
+        - ApiJWTUser: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Users"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /user/current-schedule:
+    get:
+      summary: Get user current schedule
+      tags:
+        - Mobile
+      security:
+        - ApiJWTUser: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /user/my-notifications:
+    get:
+      summary: Get user notifications
+      tags:
+        - Mobile
+      security:
+        - ApiJWTUser: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /user/read-notifications/{notification_id}:
+    put:
+      summary: Update user notification as read
+      tags:
+        - Mobile
+      security:
+        - ApiJWTUser: []
+      parameters:
+        - in: path
+          name: notification_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /user/activity-logs:
+    get:
+      summary: Get user activity logs
+      tags:
+        - Mobile
+      security:
+        - ApiJWTUser: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /user:
+    post:
+      summary: Create a new user
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Users"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    get:
+      summary: Get all users
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      parameters:
+        - in: query
+          name: location_id
+          schema:
+            type: string
+          description: To get users under given location
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /user/{id}:
+    get:
+      summary: Get user by user id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    put:
+      summary: Update user by user id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Users"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    delete:
+      summary: Delete user by user id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /role:
+    post:
+      summary: Create a new role
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Roles"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    get:
+      summary: Get all roles
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /role/{id}:
+    get:
+      summary: Get role by role id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    put:
+      summary: Update role by role id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Roles"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    delete:
+      summary: Delete role by role id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /location:
+    post:
+      summary: Create a new location
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Locations"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    get:
+      summary: Get all locations
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /location/{id}:
+    get:
+      summary: Get location by location id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    put:
+      summary: Update location by location id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Locations"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    delete:
+      summary: Delete location by location id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /schedule:
+    get:
+      summary: Get schedules
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    post:
+      summary: Add schedule
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schedule_for:
+                  type: string
+                  description: User or Location
+                users:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      first_name:
+                        type: string
+                      email:
+                        type: string
+                      phone:
+                        type: string
+                      location_name:
+                        type: string
+                location_id:
+                  type: string
+                location_name:
+                  type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /schedule/counts:
+    get:
+      summary: Get schedules counts
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /schedule/month:
+    get:
+      summary: Get schedules month
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /schedule/action:
+    post:
+      summary: Perform Schedule Action
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  description: Check, Reschedule, Delete
+                schedule_id:
+                  type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /testing:
+    get:
+      summary: Get testing
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /testing/result:
+    post:
+      summary: Add/Update testing result
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                result:
+                  type: string
+                testing_id:
+                  type: string
+                rna:
+                  type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /testing/my-tests:
+    get:
+      summary: Get my tests list
+      tags:
+        - Mobile
+      security:
+        - ApiJWTUser: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /testing/decrypt:
+    post:
+      summary: Decrypt sensitive data
+      tags:
+        - Mobile
+      security:
+        - ApiJWTUser: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sensitive_data:
+                  type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /patient/{user_id}:
+    get:
+      summary: Get patient intake details by user_id
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+    put:
+      summary: Add/Update Patients intake details
+      tags:
+        - Dashboard
+      security:
+        - ApiJWTAuth: []
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Patients"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /schedule/available-dates/{phone}:
+    get:
+      summary: Get available dates
+      tags:
+        - Schedule
+      security:
+        - ApiJWTSchedule: []
+      parameters:
+        - in: path
+          name: phone
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /schedule/available-timeslots/{phone}/{date}:
+    get:
+      summary: Get available times
+      tags:
+        - Schedule
+      security:
+        - ApiJWTSchedule: []
+      parameters:
+        - in: path
+          name: phone
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: date
+          required: true
+          schema:
+            type: string
+            description: date format 'YYYY-MM-DD' - 2020-08-27
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /voice/schedule/available-dates/{phone}:
+    get:
+      summary: Get available dates for twilio voice in words
+      tags:
+        - Schedule
+      security:
+        - ApiJWTSchedule: []
+      parameters:
+        - in: path
+          name: phone
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /voice/schedule/available-timeslots/{phone}/{date}:
+    get:
+      summary: Get available times for twilio voice in words
+      tags:
+        - Schedule
+      security:
+        - ApiJWTSchedule: []
+      parameters:
+        - in: path
+          name: phone
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: date
+          required: true
+          schema:
+            type: string
+            description: date format 'YYYY-MM-DD' - 2020-08-27
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+  /schedule/confirm:
+    post:
+      summary: Confirm the schedule
+      tags:
+        - Schedule
+      security:
+        - ApiJWTSchedule: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                date:
+                  type: string
+                  description: date format 'YYYY-MM-DD' - 2020-08-27
+                time:
+                  type: string
+                  description: time format 'HH:mm' - 16:20
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/ResponseFormat"
+
+components:
+  securitySchemes:
+    ApiJWTAuth:
+      type: "apiKey"
+      name: "testd-jwt-auth"
+      in: "header"
+    ApiJWTSchedule:
+      type: "apiKey"
+      name: "testd-jwt-schedule"
+      in: "header"
+    ApiJWTUser:
+      type: "apiKey"
+      name: "testd-jwt-user"
+      in: "header"
+
+  responses:
+    ResponseFormat:
+      type: object
+      required:
+        - success
+        - message
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          description: Object or Array
+
+  schemas:
+    Clients:
+      type: object
+      required:
+        - partner_id
+      properties:
+        name:
+          type: string
+        partner_id:
+          type: string
+        addedARG:
+          type: boolean
+        type:
+          type: string
+        form_settings:
+          type: object
+          $ref: "#/components/schemas/FormSettings"
+        system_settings:
+          type: object
+          $ref: "#/components/schemas/SystemSettings"
+    FormSettings:
+      type: object
+      properties:
+        demographic_patient_info_required:
+          type: boolean
+        demographic_patient_info_mandatory:
+          type: boolean
+        provider_info_providers_required:
+          type: boolean
+        provider_info_providers_mandatory:
+          type: boolean
+        provider_info_pharmacy_required:
+          type: boolean
+        provider_info_pharmacy_mandatory:
+          type: boolean
+        provider_info_insurance_required:
+          type: boolean
+        provider_info_insurance_mandatory:
+          type: boolean
+        medical_history_covid_19_screening_required:
+          type: boolean
+        medical_history_covid_19_screening_mandatory:
+          type: boolean
+        medical_history_current_health_required:
+          type: boolean
+        medical_history_current_health_mandatory:
+          type: boolean
+        medical_history_personal_medical_history_required:
+          type: boolean
+        medical_history_personal_medical_history_mandatory:
+          type: boolean
+        medical_history_family_medical_history_required:
+          type: boolean
+        medical_history_family_medical_history_mandatory:
+          type: boolean
+        medical_history_surgical_procedure_required:
+          type: boolean
+        medical_history_surgical_procedure_mandatory:
+          type: boolean
+        medical_history_medications_required:
+          type: boolean
+        medical_history_medications_mandatory:
+          type: boolean
+        support_service_support_services_required:
+          type: boolean
+        support_service_support_services_mandatory:
+          type: boolean
+        support_service_support_questions_required:
+          type: boolean
+        support_service_support_questions_mandatory:
+          type: boolean
+        employment_verification_required:
+          type: boolean
+        employment_verification_mandatory:
+          type: boolean
+        privacy_practices_hipaa_notice_of_privacy_required:
+          type: boolean
+        privacy_practices_hipaa_notice_of_privacy_mandatory:
+          type: boolean
+        privacy_practices_consent_for_services_required:
+          type: boolean
+        privacy_practices_consent_for_services_mandatory:
+          type: boolean
+        privacy_practices_financial_responsibilities_required:
+          type: boolean
+        privacy_practices_financial_responsibilities_mandatory:
+          type: boolean
+        privacy_practices_patient_rules_responsibilities_required:
+          type: boolean
+        privacy_practices_patient_rules_responsibilities_mandatory:
+          type: boolean
+        privacy_practices_health_info_release_auth_required:
+          type: boolean
+        privacy_practices_health_info_release_auth_mandatory:
+          type: boolean
+        privacy_practices_receipt_of_documents_required:
+          type: boolean
+        privacy_practices_receipt_of_documents_mandatory:
+          type: boolean
+        privacy_practices_result_delivery_required:
+          type: boolean
+        privacy_practices_result_delivery_mandatory:
+          type: boolean
+    SystemSettings:
+      type: object
+      required:
+        - rapid_pairing_mode
+      properties:
+        rapid_pairing_mode:
+          type: boolean
+    # FormSettings:
+    #   type: object
+    #   required:
+    #     - demographics
+    #     - provider_information
+    #     - medical_history
+    #     - support_services
+    #     - employment_verification
+    #     - privacy_practices
+    #   properties:
+    #     demographics:
+    #       type: object
+    #       properties:
+    #         patient_information:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #     provider_information:
+    #       type: object
+    #       properties:
+    #         providers:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         pharmacy:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         insurance:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #     medical_history:
+    #       type: object
+    #       properties:
+    #         covid_19_screening:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         current_health:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         personal_medical_history:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         family_medical_history:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         surgical_procedure:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         medications:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #     support_services:
+    #       type: object
+    #       properties:
+    #         support_services:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         support_questions:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #     employment_verification:
+    #       type: object
+    #       properties:
+    #         employment_verification:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #     privacy_practices:
+    #       type: object
+    #       properties:
+    #         hipaa_notice_of_privacy:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         consent_for_services:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         financial_responsibilities:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         patient_rules_responsibilities:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         health_info_release_auth:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         receipt_of_documents:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    #         result_delivery:
+    #           type: object
+    #           properties:
+    #             required:
+    #               type: boolean
+    #             mandatory:
+    #               type: boolean
+    Roles:
+      type: object
+      required:
+        - client_id
+        - type
+        - name
+        - modules
+        - active
+        - last_updated
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        active:
+          type: boolean
+        last_updated:
+          description: Date and time
+        client_id:
+          description: String or object
+        modules:
+          type: array
+          items:
+            $ref: "#/components/schemas/RoleModule"
+    RoleModule:
+      type: object
+      required:
+        - name
+        - access
+      properties:
+        name:
+          type: string
+        access:
+          type: array
+          items:
+            type: string
+            enum: [Read, Write, Delete]
+    Accounts:
+      type: object
+      required:
+        - client_id
+        - first_name
+        - last_name
+        - email
+        - role_id
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        active:
+          type: boolean
+        email:
+          type: string
+          format: email
+        role_id:
+          description: String or object
+        client_id:
+          description: String or object
+        access_to_locations:
+          type: array
+          items:
+            type: string
+        created_date:
+          description: Date and time
+        phone:
+          type: string
+        title:
+          type: string
+        department:
+          type: string
+        ext:
+          type: string
+        office_phone:
+          type: string
+        location:
+          type: string
+        address:
+          type: string
+        unit:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        photo:
+          type: string
+    Sessions:
+      type: object
+      required:
+        - account_id
+        - ip_address
+        - user_agent
+        - device
+        - login_time
+        - status
+      properties:
+        account_id:
+          description: String or object
+        ip_address:
+          type: string
+        user_agent:
+          type: string
+        device:
+          type: string
+        login_time:
+          description: Date and time
+        status:
+          type: string
+          enum: [Online, Terminated, Session Expired, Logged Out]
+    Users:
+      type: object
+      required:
+        - client_id
+        - first_name
+        - last_name
+        - email
+        - verification_id
+        - location_id
+        - department_id
+      properties:
+        password:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        middle_name:
+          type: string
+        active:
+          type: boolean
+        email:
+          type: string
+          format: email
+        client_id:
+          description: String or object
+        location_id:
+          description: String or object
+        department_id:
+          description: String or object
+        verification_id:
+          type: string
+        created_date:
+          type: string
+          format: date
+        phone:
+          type: string
+        phone_verified:
+          type: boolean
+        ext:
+          type: string
+        office_phone:
+          type: string
+        address:
+          type: string
+        address2:
+          type: string
+        unit:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        county:
+          type: string
+        photo:
+          type: string
+        zip_code:
+          type: string
+        social_digits:
+          type: string
+        dob:
+          type: string
+        gender:
+          type: string
+        ethnicity:
+          type: string
+        race:
+          type: string
+        location_sharing:
+          type: boolean
+        contact_tracing:
+          type: boolean
+        have_insurance:
+          type: boolean
+        signature:
+          type: string
+        personal_id_front:
+          type: string
+        personal_id_back:
+          type: string
+        latest_test_result:
+          type: object
+          properties:
+            result:
+              type: string
+              description: Covid-19 result status
+              enum: [Pending, Negative, Positive, Inconclusive]
+            date:
+              type: string
+            time:
+              type: string
+            date_time:
+              description: Date and time
+    Locations:
+      type: object
+      required:
+        - client_id
+        - name
+        - active
+        - administrator
+        - admin_office_phone
+        - address
+        - office_phone
+        - city
+        - email
+        - state
+        - zip_code
+        - county
+        - eoc
+        - phone
+        - testing_protocol
+        - is_healthcare_related
+        - is_resident_congregate_setting
+        - slot_difference
+        - operations
+        - provider
+      properties:
+        client_id:
+          description: String or object
+        name:
+          type: string
+        active:
+          type: boolean
+        administrator:
+          type: string
+        admin_office_phone:
+          type: string
+        admin_office_ext:
+          type: string
+        address:
+          type: string
+        office_phone:
+          type: string
+        ext:
+          type: string
+        city:
+          type: string
+        created_date:
+          description: Date and time
+        email:
+          type: string
+          format: email
+        state:
+          type: string
+        zip_code:
+          type: string
+        county:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        eoc:
+          type: string
+        eoc_office_phone:
+          type: string
+        eoc_ext:
+          type: string
+        eoc_email:
+          type: string
+        phone:
+          type: string
+        testing_protocol:
+          type: string
+        is_healthcare_related:
+          type: string
+        is_resident_congregate_setting:
+          type: string
+        site_logo:
+          type: string
+        provider:
+          type: object
+          $ref: "#/components/schemas/LocationProvider"
+        slot_difference:
+          type: number
+          description: Slot difference should be number in minutes
+        operations:
+          type: array
+          items:
+            $ref: "#/components/schemas/LocationOperations"
+    LocationOperations:
+      type: object
+      required:
+        - day_name
+        - active
+        - opens24hours
+        - start_time
+        - end_time
+        - stations
+      properties:
+        day_name:
+          type: string
+        active:
+          type: boolean
+        opens24hours:
+          type: boolean
+        start_time:
+          type: string
+          description: Time
+        end_time:
+          type: string
+          description: Time
+        stations:
+          type: number
+    LocationProvider:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - phone
+        - npi
+        - email
+        - address
+        - city
+        - state
+        - zip_code
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone:
+          type: string
+        npi:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip_code:
+          type: string
+        signature:
+          type: string
+    Departments:
+      type: object
+      required:
+        - client_id
+        - location_id
+        - active
+        - name
+        - head
+        - phone
+        - extension_number
+        - email
+      properties:
+        client_id:
+          description: String or object
+        location_id:
+          description: String or object
+        active:
+          type: boolean
+        name:
+          type: string
+        head:
+          type: string
+        phone:
+          type: string
+        extension_number:
+          type: string
+        email:
+          type: string
+    Schedules:
+      type: object
+      required:
+        - client_id
+        - location_id
+        - user_id
+        - date_time
+        - date
+        - time
+      properties:
+        location_id:
+          description: String or object
+        user_id:
+          description: String or object
+        client_id:
+          description: String or object
+        date_time:
+          description: Date and time
+        date:
+          description: Date format - YYYY-MM-DD
+        time:
+          type: string
+    Testings:
+      type: object
+      required:
+        - client_id
+        - location_id
+        - user_id
+        - paired
+        - schedule_date_time
+        - schedule_date
+        - schedule_time
+        - result
+        - completed
+        - protocol_email_sent
+      properties:
+        location_id:
+          description: String or object
+        user_id:
+          description: String or object
+        client_id:
+          description: String or object
+        testkit_id:
+          type: string
+        test_session_id:
+          type: string
+        test_type:
+          type: string
+        paired:
+          type: boolean
+        schedule_date_time:
+          description: Date and time
+        schedule_date:
+          description: Date format - YYYY-MM-DD
+        schedule_time:
+          type: string
+        date_time:
+          description: Date and time
+        date:
+          description: Date format - YYYY-MM-DD
+        time:
+          type: string
+        result:
+          type: string
+          description: Covid-19 result status
+          enum: [Pending, Negative, Positive, Inconclusive]
+        patient_signature:
+          type: string
+        medical_technician:
+          type: string
+        testkit_front:
+          type: string
+        testkit_back:
+          type: string
+        completed:
+          type: boolean
+        protocol_email_sent:
+          type: boolean
+        specimen_information:
+          type: string
+        lab_submitted_timestamp:
+          description: Date and time
+        collected_timestamp:
+          description: Date and time
+        received_timestamp:
+          description: Date and time
+        reported_timestamp:
+          description: Date and time
+        rna:
+          type: string
+          enum: [Not Detected, Non Reactive, Inconclusive]
+    Notifications:
+      type: object
+      required:
+        - message
+        - date
+        - read
+      properties:
+        user_id:
+          description: String or object
+        account_id:
+          description: String or object
+        date:
+          description: Date and time
+        title:
+          type: string
+        message:
+          type: string
+        severity:
+          type: string
+          enum:
+            [
+              Emergency,
+              Alert,
+              Critical,
+              Error,
+              Warning,
+              Notification,
+              Informational,
+              Debugging,
+            ]
+        read:
+          type: boolean
+        type:
+          type: string
+          enum:
+            [
+              Test results,
+              Schedule,
+              Contact tracing,
+              Contact tracing,
+              Test expiration,
+              Shipping,
+            ]
+    Activities:
+      type: object
+      required:
+        - user_id
+        - date
+        - activity
+      properties:
+        user_id:
+          description: String or object
+        date:
+          description: Date and time
+        activity:
+          type: string
+    Patients:
+      type: object
+      required:
+        - user_id
+        - created_date
+      properties:
+        user_id:
+          description: String or object
+        created_date:
+          description: Date and time
+        height:
+          type: string
+        weight:
+          type: string
+        bp_sys:
+          type: string
+        bp_dia:
+          type: string
+        temperature:
+          type: string
+        providers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Providers"
+        pharmacy:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pharmacy"
+        insurance:
+          type: object
+          $ref: "#/components/schemas/Insurance"
+        covid_19_screening:
+          # type: object
+          # $ref: "#/components/schemas/Covid19Screening"
+          type: array
+          items:
+            $ref: "#/components/schemas/Question"
+        other_screening:
+          type: array
+          items:
+            $ref: "#/components/schemas/Question"
+        personal_medical_history:
+          type: array
+          items:
+            $ref: "#/components/schemas/Question"
+        family_medical_history:
+          type: array
+          items:
+            $ref: "#/components/schemas/Question"
+        surgical_procedure:
+          type: array
+          items:
+            $ref: "#/components/schemas/SurgicalProcedure"
+        medications:
+          type: array
+          items:
+            $ref: "#/components/schemas/Medications"
+        support_services:
+          type: object
+          $ref: "#/components/schemas/Question"
+        support_questions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Question"
+        employment_verification:
+          type: object
+          $ref: "#/components/schemas/EmploymentVerification"
+        patient_rules_responsibilities:
+          type: object
+          $ref: "#/components/schemas/SignatureAndTimestamp"
+        hipaa_notice_of_privacy:
+          type: object
+          $ref: "#/components/schemas/SignatureAndTimestamp"
+        consent_for_services:
+          type: object
+          $ref: "#/components/schemas/SignatureAndTimestamp"
+        receipt_of_documents:
+          type: object
+          $ref: "#/components/schemas/SignatureAndTimestamp"
+        health_info_release_auth:
+          type: object
+          $ref: "#/components/schemas/HealthInfoReleaseAuth"
+        result_delivery:
+          type: object
+          $ref: "#/components/schemas/ResultDelivery"
+        financial_responsibilities:
+          type: object
+          $ref: "#/components/schemas/FinancialResponsibilites"
+    SignatureAndTimestamp:
+      type: object
+      required:
+        - signature
+        - submitted_timestamp
+      properties:
+        signature:
+          type: string
+        submitted_timestamp:
+          description: Date and time
+    Question:
+      type: object
+      required:
+        - question
+        - value
+      properties:
+        question:
+          type: string
+        value:
+          type: string
+    Providers:
+      type: object
+      required:
+        - name
+        - phone
+        - address
+        - city
+        - state
+        - zip_code
+        - policy_number
+        - group_number
+      properties:
+        name:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip_code:
+          type: string
+        policy_number:
+          type: string
+        group_number:
+          type: string
+    Pharmacy:
+      type: object
+      required:
+        - primary_pharmacy
+        - phone
+        - address
+        - city
+        - state
+        - zip_code
+      properties:
+        primary_pharmacy:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip_code:
+          type: string
+    Insurance:
+      type: object
+      required:
+        - name_of_insured
+        - insureds_workplace
+        - primary_insurance
+        - primary_pcn
+        - primary_id_number
+        - primary_rx_group
+        - primary_bin
+        - primary_insurance_card_front
+        - primary_insurance_card_back
+        - secondary_insurance
+        - secondary_pcn
+        - secondary_id_number
+        - secondary_rx_group
+        - secondary_bin
+        - secondary_insurance_card_front
+        - secondary_insurance_card_back
+      properties:
+        name_of_insured:
+          type: string
+        insureds_workplace:
+          type: string
+        primary_insurance:
+          type: string
+        primary_pcn:
+          type: string
+        primary_id_number:
+          type: string
+        primary_rx_group:
+          type: string
+        primary_bin:
+          type: string
+        primary_insurance_card_front:
+          type: string
+        primary_insurance_card_back:
+          type: string
+        secondary_insurance:
+          type: string
+        secondary_pcn:
+          type: string
+        secondary_id_number:
+          type: string
+        secondary_rx_group:
+          type: string
+        secondary_bin:
+          type: string
+        secondary_insurance_card_front:
+          type: string
+        secondary_insurance_card_back:
+          type: string
+    # Covid19Screening:
+    #   type: object
+    #   required:
+    #     - fever
+    #     - copd_or_asthma
+    #     - breathing_difficulty
+    #     - smoke
+    #     - chest_pain
+    #     - loss_of_taste_or_smell
+    #     - cancer
+    #     - slurred_speech
+    #     - organ_or_bone_marrow_transplant
+    #     - difficulty_waking_up
+    #     - exposed_to_anyone_with_covid_19
+    #     - cough
+    #     - visited_nursing_home_in_last_14_days
+    #     - severe_constant_dizziness_or_lightheadedness
+    #     - traveled_outside_US_in_last_14_days
+    #     - vomiting_or_diarrhea
+    #     - female_and_either_nursing_or_pregnant
+    #     - heart_conditions
+    #     - diabetes
+    #     - liver_disease
+    #     - renal_failure
+    #   properties:
+    #     fever:
+    #       type: boolean
+    #     fever_temp:
+    #       type: string
+    #     copd_or_asthma:
+    #       type: boolean
+    #     breathing_difficulty:
+    #       type: boolean
+    #     smoke:
+    #       type: boolean
+    #     chest_pain:
+    #       type: boolean
+    #     loss_of_taste_or_smell:
+    #       type: boolean
+    #     cancer:
+    #       type: boolean
+    #     slurred_speech:
+    #       type: boolean
+    #     organ_or_bone_marrow_transplant:
+    #       type: boolean
+    #     difficulty_waking_up:
+    #       type: boolean
+    #     exposed_to_anyone_with_covid_19:
+    #       type: boolean
+    #     cough:
+    #       type: boolean
+    #     visited_nursing_home_in_last_14_days:
+    #       type: boolean
+    #     severe_constant_dizziness_or_lightheadedness:
+    #       type: boolean
+    #     traveled_outside_US_in_last_14_days:
+    #       type: boolean
+    #     vomiting_or_diarrhea:
+    #       type: boolean
+    #     female_and_either_nursing_or_pregnant:
+    #       type: boolean
+    #     heart_conditions:
+    #       type: boolean
+    #     diabetes:
+    #       type: boolean
+    #     liver_disease:
+    #       type: boolean
+    #     renal_failure:
+    #       type: boolean
+    SurgicalProcedure:
+      type: object
+      required:
+        - procedure
+        - year
+      properties:
+        procedure:
+          type: string
+        year:
+          type: string
+    Medications:
+      type: object
+      required:
+        - medication
+        - reason_prescribed
+        - dosage
+      properties:
+        medication:
+          type: string
+        reason_prescribed:
+          type: string
+        dosage:
+          type: string
+    # OtherScreening:
+    #   type: object
+    #   required:
+    #     - hiv
+    #     - health_now
+    #     - disabilities
+    #     - last_medical_visit
+    #   properties:
+    #     hiv:
+    #       type: string
+    #     health_now:
+    #       type: string
+    #     disabilities:
+    #       type: string
+    #     last_medical_visit:
+    #       type: string
+    # PersonalMedicalHistory:
+    #   type: object
+    #   required:
+    #     - hypertension
+    #     - neurological_disorder
+    #     - diabetes
+    #     - liver
+    #     - thyroid
+    #     - gastrointestinal_disease
+    #     - heart_disease
+    #     - urinary_disease
+    #     - cancer
+    #   properties:
+    #     hypertension:
+    #       type: boolean
+    #     neurological_disorder:
+    #       type: boolean
+    #     diabetes:
+    #       type: boolean
+    #     liver:
+    #       type: boolean
+    #     thyroid:
+    #       type: boolean
+    #     gastrointestinal_disease:
+    #       type: boolean
+    #     heart_disease:
+    #       type: boolean
+    #     urinary_disease:
+    #       type: boolean
+    #     cancer:
+    #       type: boolean
+    #     cancer_type:
+    #       type: string
+    # FamilyMedicalHistory:
+    #   type: object
+    #   required:
+    #     - hypertension
+    #     - heart_disease
+    #     - diabetes
+    #     - cancer
+    #   properties:
+    #     hypertension:
+    #       type: boolean
+    #     heart_disease:
+    #       type: boolean
+    #     diabetes:
+    #       type: boolean
+    #     cancer:
+    #       type: boolean
+    #     cancer_type:
+    #       type: string
+    EmploymentVerification:
+      type: object
+      required:
+        - type
+        - employer_name
+        - address
+        - city
+        - suite
+        - state
+        - zip_code
+        - office_phone
+        - gross_wages
+        - frequency_of_pay
+      properties:
+        type:
+          type: string
+        explain_other:
+          type: string
+        employer_name:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        suite:
+          type: string
+        state:
+          type: string
+        zip_code:
+          type: string
+        office_phone:
+          type: string
+        gross_wages:
+          type: string
+        frequency_of_pay:
+          type: string
+    HealthInfoReleaseAuth:
+      type: object
+      required:
+        - organization
+        - phone
+        - address
+        - dates_of_medical_record_requested
+        - city
+        - reason_for_disclosure
+        - authorize_to_release
+      properties:
+        organization:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        dates_of_medical_record_requested:
+          description: Date and time
+        city:
+          type: string
+        reason_for_disclosure:
+          type: string
+        authorize_to_release:
+          type: string
+        submitted_timestamp:
+          description: Date and time
+    ResultDelivery:
+      type: object
+      required:
+        - receive_results
+        - date
+      properties:
+        receive_results:
+          type: string
+        disclosure:
+          type: string
+        date:
+          type: string
+        patient_signature:
+          type: string
+        guardian_signature:
+          type: string
+        submitted_timestamp:
+          description: Date and time
+    FinancialResponsibilites:
+      type: object
+      required:
+        - last_name
+        - first_name
+      properties:
+        last_name:
+          type: string
+        first_name:
+          type: string
+        signature:
+          type: string
+        submitted_timestamp:
+          description: Date and time
+    Sftp:
+      type: object
+      required:
+        - filename
+        - patient_name
+        - status
+        - order_id
+        - result
+      properties:
+        filename:
+          type: string
+        patient_name:
+          type: string
+        status:
+          type: string
+          enum:
+            [
+              Completed,
+              Unknown_Order_ID,
+            ]
+        order_id:
+          type: string
+        result:
+          type: string

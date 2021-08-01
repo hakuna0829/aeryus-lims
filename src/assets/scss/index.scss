@@ -1,0 +1,32 @@
+// @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  // background-color: #f4f6f8;
+  height: 100%;
+}
+
+// zooming issue ios when input focused
+//-------------
+body { font-size: 16px; }
+input, select { font-size: 100%; }
+//-------------
+
+a {
+  text-decoration: none;
+}
+
+#root {
+  height: 100%;
+}

@@ -1,0 +1,14 @@
+.vscode
+.git
+.github
+.gitignore
+
+package-lock.json
+
+node_modules
+build
+
+*.md
+
+/public/env-config.js
+env-config.js

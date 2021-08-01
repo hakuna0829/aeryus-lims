@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="31px" height="31px" viewBox="0 0 31 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>EA6F3086-8E52-426D-8BD4-EEF488E4A642</title>
+    <g id="Covid-Screening" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="COVID_screening-tool_1" transform="translate(-35.000000, -482.000000)">
+            <g id="Group-2" transform="translate(35.000000, 482.000000)">
+                <circle id="Oval-Copy-2" fill="#0F84A9" cx="15.2" cy="15.2" r="15.2"></circle>
+                <g id="checkmark_icon" transform="translate(4.800000, 5.600000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <polygon id="Path" points="20.8 2.36666667 17.7625397 0 7.72571429 13.0666667 2.90539683 7.4 0 9.93333333 7.89079365 19.2 7.89079365 19.2 7.89079365 19.2"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

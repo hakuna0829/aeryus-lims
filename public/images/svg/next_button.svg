@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="135px" height="50px" viewBox="0 0 135 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 2</title>
+    <g id="Demographics" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Demographic_intake-2" transform="translate(-219.000000, -636.000000)">
+            <g id="Group-2" transform="translate(219.000000, 636.000000)">
+                <rect id="Rectangle-Copy-11" fill="#0F84A9" x="0" y="-3.55271368e-15" width="135" height="50" rx="10"></rect>
+                <text id="Next" font-family="Montserrat-Medium, Montserrat" font-size="20" font-weight="500" fill="#FFFFFF">
+                    <tspan x="33.1" y="32">Next</tspan>
+                </text>
+                <path id="Line-Copy" d="M108.821411,20.3401526 L116.868423,24.2447135 L108.916567,28.3395867 L108.873,24.739 L95.4121652,24.8999717 L95.0121935,24.9047295 L95.0026779,24.1047861 L95.4026496,24.1000283 L108.864,23.94 L108.821411,20.3401526 Z" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

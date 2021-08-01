@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="14px" viewBox="0 0 12 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>E12C03B8-6853-490F-8474-64E3954CC9F2</title>
+    <g id="navigation" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.5">
+        <g id="user_navigation_uncollapsed" transform="translate(-50.000000, -989.000000)" fill-rule="nonzero" stroke="#043B5D">
+            <g id="collapse_icon_blue" transform="translate(51.000000, 990.500000)">
+                <path d="M4,10.5424144 C4,10.3988581 4.07196402,10.2911909 4.14392804,10.2194127 L8.89355322,5.48205546 L4.14392804,0.780587276 C3.96401799,0.601141925 3.96401799,0.314029364 4.14392804,0.134584013 C4.32383808,-0.0448613377 4.61169415,-0.0448613377 4.7916042,0.134584013 L9.86506747,5.1949429 C10.0449775,5.37438825 10.0449775,5.66150082 9.86506747,5.84094617 L4.7916042,10.865416 C4.61169415,11.0448613 4.32383808,11.0448613 4.14392804,10.865416 C4.07196402,10.7936378 4,10.6859706 4,10.5424144 Z" id="Path" stroke-width="1.5"></path>
+                <line x1="0.5" y1="0.5" x2="0.5" y2="10.6333333" id="Path" stroke-width="2" stroke-linecap="round"></line>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="137px" height="52px" viewBox="0 0 137 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group</title>
+    <g id="Demographics" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Demographic_intake-2" transform="translate(-23.000000, -635.000000)">
+            <g id="Group" transform="translate(24.000000, 636.000000)">
+                <rect id="Rectangle" stroke="#0F84A9" fill="#FFFFFF" x="0" y="-3.55271368e-15" width="135" height="50" rx="10"></rect>
+                <text id="Back" font-family="Montserrat-Medium, Montserrat" font-size="20" font-weight="500" fill="#0F84A9">
+                    <tspan x="52.58" y="32">Back</tspan>
+                </text>
+                <path id="Line" d="M24.8406898,20.338725 L24.798,23.938 L38.5972753,24.1000274 L38.9972479,24.1047101 L38.9878825,24.9046553 L38.5879099,24.8999726 L24.789,24.738 L24.7470359,28.3381768 L16.794411,24.244797 L24.8406898,20.338725 Z" fill="#0F84A9" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

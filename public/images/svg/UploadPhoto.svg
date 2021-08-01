@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="68px" height="75px" viewBox="0 0 68 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>UploadPhoto</title>
+    <g id="user_employee_manager" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.5">
+        <g id="employees_list-view-_add_employee_popup" transform="translate(-689.000000, -1147.000000)" fill="#0F84A9" fill-rule="nonzero">
+            <g id="Group-3" transform="translate(276.000000, 189.000000)">
+                <g id="UploadPhoto" transform="translate(413.000000, 958.000000)">
+                    <polygon id="Path" points="50 11.2755102 14.2384106 11.2755102 14.2384106 65 0 12.9336735 46.6887417 0"></polygon>
+                    <path d="M68,75 L17,75 L17,14 L68,14 L68,75 Z M19.6493506,72.6918919 L65.6818182,72.6918919 L65.6818182,16.6378378 L19.6493506,16.6378378 L19.6493506,72.6918919 Z" id="Shape"></path>
+                    <path d="M45,39.5 C45,35.925 42.075,33 38.5,33 C34.925,33 32,35.925 32,39.5 C32,43.075 34.925,46 38.5,46 C42.075,46 45,43.075 45,39.5 Z" id="Path"></path>
+                    <polygon id="Path" points="63 70 63 55.4945055 53.8888889 40 40.8730159 62.0879121 33.0634921 52.5274725 22 70"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,41 @@
+.custom-styles {
+  margin-top:30px;
+  --ReactInputVerificationCode-itemWidth: 2.5rem;
+  --ReactInputVerificationCode-itemHeight: 3.5rem;
+}
+
+.custom-styles .ReactInputVerificationCode__container{
+  margin:0 auto;
+  text-align: center;
+}
+
+.custom-styles .ReactInputVerificationCode__item {
+  position: relative;
+  color: #262626;
+  font-weight: 500;
+}
+
+.custom-styles .ReactInputVerificationCode__item,
+.custom-styles .ReactInputVerificationCode__item.is-active {
+  box-shadow: none;
+  border: solid #0F84A9 1px;
+  height: 45px;
+  width: 45px;
+  line-height: 43px;
+}
+
+.custom-styles .ReactInputVerificationCode__item:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 2px;
+  /* background-color:#0F84A9; */
+  transition: background-color 0.2s ease-out;
+}
+
+.custom-styles .ReactInputVerificationCode__item.is-active:after {
+  background-color: #046cde;
+}

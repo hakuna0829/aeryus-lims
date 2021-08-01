@@ -1,0 +1,11 @@
+version: "3.2"
+
+services:
+  testd-dashboard:
+    image: sarathkaleswaram/testd-dashboard:$DOCKER_IMAGE_VERION
+    ports:
+      - 3000:80
+    environment:
+      - REACT_APP_API_URL=http://34.197.45.248:3001/api
+      - REACT_APP_EXPLORER_URL=http://34.197.45.248:8080/#/transactions
+      - REACT_APP_CLIENT=dev1

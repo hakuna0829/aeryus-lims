@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="38px" viewBox="0 0 38 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>circle_s</title>
+    <g id="reporting" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="reporting_custom" transform="translate(-173.000000, -825.000000)">
+            <g id="circle_s" transform="translate(174.000000, 826.000000)">
+                <circle id="Oval" stroke="#0F84A9" stroke-width="2" fill="#FFFFFF" cx="18" cy="18" r="18"></circle>
+                <text id="S" font-family="Montserrat-Bold, Montserrat" font-size="24" font-weight="bold" fill="#0F84A9">
+                    <tspan x="10" y="27">S</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>
