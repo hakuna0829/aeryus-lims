@@ -9,9 +9,9 @@ import { showConfirmationDialog } from 'actions/dialogAlert';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    background: theme.palette.sideMenuBgColor,
+    background: theme.palette.brand,
     '& .MuiTypography-body1': {
-      color: '#043B5D',
+      color: '#ffffff80',
       fontSize: '12px',
     },
     '&:hover': {
@@ -19,6 +19,10 @@ const useStyles = makeStyles(theme => ({
       '& .MuiTypography-body1': {
         color: theme.palette.sideMenuActiveColor,
       },
+      '& .MuiSvgIcon-root':{
+        color: theme.palette.white
+      },
+      
     },
     borderTopWidth: 1,
     borderStyle: 'solid',

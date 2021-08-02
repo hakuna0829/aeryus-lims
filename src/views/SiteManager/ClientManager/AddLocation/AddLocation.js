@@ -16,7 +16,9 @@ import Alert from '@material-ui/lab/Alert';
 import DialogAlert from 'components/DialogAlert';
 import DialogAlertOperationConfirmation from 'components/DialogAlert';
 // import SignaturePad from 'react-signature-canvas';
-import { addLocation, uploadImage, apiUrl, getInventoryAvailable } from 'actions/api';
+import { addLocation, uploadImage, apiUrl, 
+  // getInventoryAvailable 
+} from 'actions/api';
 import { clearLocations } from 'actions/clear';
 import AddIcon from '@material-ui/icons/Add';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -24,21 +26,21 @@ import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
-import moment from "moment";
-import MomentUtils from "@date-io/moment";
+import moment from 'moment';
+import MomentUtils from '@date-io/moment';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
 } from '@material-ui/pickers';
 import * as appConstants from 'constants/appConstants';
-import { Location, Edit, Delete } from 'icons';
+import { Users, Edit, Delete } from 'icons';
 // import CheckButton from 'components/CheckButton';
 // import ZipCodeInput from 'components/ZipCodeInput';
 import NpiInput from 'components/NpiInput';
 import TextButton from 'components/Button/TextButton';
 import CloseIcon from '@material-ui/icons/Close';
-import LineStepProgressBar from "components/LineStepProgressBar";
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import LineStepProgressBar from 'components/LineStepProgressBar';
+// import Autocomplete from '@material-ui/lab/Autocomplete';
 import NumberFormat from 'react-number-format';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
@@ -56,9 +58,11 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
   },
   headerTitle: {
-    color: theme.palette.blueDark,
+    color: theme.palette.brand,
     marginBottom: theme.spacing(1),
     fontWeight: 600,
+    display: 'flex',
+    alignItems: 'center',
     '& span': {
       fontWeight: 500
     }
@@ -68,7 +72,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(4)
   },
   backTitle: {
-    color: '#788081',
+    color: theme.palette.brandDisableGray,
     fontFamily: 'Montserrat',
     fontStyle: 'normal',
     fontWeight: 500,
@@ -82,7 +86,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 500,
     fontSize: '24px',
     lineHeight: '34px',
-    color: '#043B5D'
+    color: theme.palette.brand
   },
   operationTitle: {
     backgroundColor: 'rgba(15,132,169,0.8)',
@@ -244,15 +248,15 @@ const useStyles = makeStyles(theme => ({
     }
   },
   providerCheckbox: {
-    color: theme.palette.brandDark,
+    color: theme.palette.brand,
     '& img': {
       marginLeft: 10,
     },
     '& .MuiTypography-body1': {
-      color: theme.palette.brandDark
+      color: theme.palette.brand
     },
     '& .MuiSvgIcon-root': {
-      color: theme.palette.brandDark
+      color: theme.palette.brand
     }
   },
   dayCheckboxChecked: {
@@ -392,13 +396,13 @@ const useStyles = makeStyles(theme => ({
       fontSize: '14px',
       lineHeight: '17px',
       textAlign: 'center',
-      color: '#0F84A9'
+      color: theme.palette.brand
     }
   },
   greenBtn: {
-    backgroundColor: theme.palette.brandDark,
+    backgroundColor: '#016A73',
     color: theme.palette.white,
-    textTransform: 'capitalize',
+    textTransform: 'uppercase',
     fontSize: '16px',
     borderRadius: '10px',
     // '&:hover': {
@@ -411,10 +415,10 @@ const useStyles = makeStyles(theme => ({
     }
   },
   operationContainer: {
-    border: 'solid #0F84A9 1px',
-    borderRadius: '10px',
+    border: `solid ${theme.palette.brand} 1px`,
+    borderRadius: '8px',
     boxShadow: '6.35934px 2.54374px 11.4468px 2.54374px rgba(4, 59, 93, 0.15)',
-    padding: '24px 0 12px'
+    padding: '0px 0 12px'
   },
   operationTimes: {
     fontFamily: 'Montserrat',
@@ -427,7 +431,8 @@ const useStyles = makeStyles(theme => ({
   },
   operationHeader: {
     fontFamily: 'Montserrat',
-    background: '#87C1D4', color: 'white', fontSize: '20px', lineHeight: '29px', padding: '8px 32px'
+    background: '#5E89A2', color: 'white', fontSize: '20px', lineHeight: '29px', padding: '8px 32px',
+    borderRadius: '8px 8px 0px 0px'
   },
   dayRow: {
     width: 200,
@@ -634,20 +639,22 @@ const OperationErrorsInit = [...Array(7)].map((e) => (
   }
 ));
 
-const labelArray = ['Location Information', 'Administrator Contact Details', 'Provider Information', 'Operation Details'];
+const labelArray = ['Client Information', 'Client Contact Details', 'Provider Information', 'Interface Details'];
 
 const AddLocation = (props) => {
-  const { isWelcomePage, updateStep, clearLocations, addLocation, uploadImage, getInventoryAvailable } = props;
+  const { isWelcomePage, updateStep, clearLocations, addLocation, uploadImage, 
+    // getInventoryAvailable 
+  } = props;
 
   const classes = useStyles();
   const brandClasses = brandStyles();
   const history = useHistory();
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(3);
   const [eocView, setEocView] = useState(false);
   const [timeSlotError, setTimeSlotError] = useState(null);
-  const [inventory, setInventory] = useState([]);
-  const [selectedInventory, setSelectedInventory] = useState([]);
+  // const [inventory, setInventory] = useState([]);
+  const [selectedInventory] = useState([]);
   const [inventoryError, setInventoryError] = useState(null);
 
   const [displayError, setDisplayError] = useState(null);
@@ -667,12 +674,12 @@ const AddLocation = (props) => {
   const [recalculate, setRecalculate] = useState(0);
 
   useEffect(() => {
-    (async () => {
-      let res = await getInventoryAvailable();
-      if (res.success) {
-        setInventory(res.data);
-      }
-    })();
+    // (async () => {
+    //   let res = await getInventoryAvailable();
+    //   if (res.success) {
+    //     setInventory(res.data);
+    //   }
+    // })();
     // eslint-disable-next-line
   }, []);
 
@@ -730,13 +737,13 @@ const AddLocation = (props) => {
       return setInventoryError('Please Select Inventory');
     }
     if (inventoryAvailableCount.vaccine < 0) {
-      return setInventoryError(`Vaccine insufficient`);
+      return setInventoryError('Vaccine insufficient');
     }
     if (inventoryAvailableCount.pcr < 0) {
-      return setInventoryError(`PCR insufficient`);
+      return setInventoryError('PCR insufficient');
     }
     if (inventoryAvailableCount.antigen < 0) {
-      return setInventoryError(`Antigen insufficient`);
+      return setInventoryError('Antigen insufficient');
     }
     // if no errors
     setInventoryError(null);
@@ -787,9 +794,9 @@ const AddLocation = (props) => {
     }
   };
 
-  const handleInventoryChange = (e, values) => {
-    setSelectedInventory(values);
-  };
+  // const handleInventoryChange = (e, values) => {
+  //   setSelectedInventory(values);
+  // };
 
   const handleHoursCheckChange = (index, slot_index) => event => {
     event.persist();
@@ -869,10 +876,10 @@ const AddLocation = (props) => {
       if (i !== slot_index) {
         if (operations[index].time_slots[i].start_time === moment(date).format('HH:mm')) {
           checkduplicate = true;
-          setTimeSlotError("Start Time already exists");
+          setTimeSlotError('Start Time already exists');
           return;
         } else if (moment(date).format('HH:mm') <= operations[index].time_slots[i].end_time && moment(date).format('HH:mm') >= operations[index].time_slots[i].start_time) {
-          setTimeSlotError("Start Time  is in between selected slots ");
+          setTimeSlotError('Start Time  is in between selected slots ');
           return;
         } else {
           checkduplicate = false
@@ -894,10 +901,10 @@ const AddLocation = (props) => {
       if (i !== slot_index) {
         if (operations[index].time_slots[i].end_time === moment(date).format('HH:mm')) {
           checkduplicate = true;
-          setTimeSlotError("End Time already exists");
+          setTimeSlotError('End Time already exists');
           return;
         } else if (moment(date).format('HH:mm') <= operations[index].time_slots[i].end_time && moment(date).format('HH:mm') >= operations[index].time_slots[i].start_time) {
-          setTimeSlotError("Start Time and End Time is in between selected slots ");
+          setTimeSlotError('Start Time and End Time is in between selected slots ');
           return;
         } else {
           checkduplicate = false
@@ -1009,9 +1016,9 @@ const AddLocation = (props) => {
       setStep(step + 1);
     } else if (step === 2) {
       if (!formState.provider.send_signature_request_email && !formState.provider.send_signature_request_sms)
-        return setDisplayError(`Please check Email or Text to Send signature request`);
+        return setDisplayError('Please check Email or Text to Send signature request');
       if (formState.provider.npi.trim().length < 10)
-        return setDisplayError(`Invalid Provider NPI number.`);
+        return setDisplayError('Invalid Provider NPI number.');
       setStep(step + 1);
     } else {
       if (inventoryError && !isForce) {
@@ -1077,8 +1084,11 @@ const AddLocation = (props) => {
           </Grid>
         )}
         <div className={classes.header}>
-          <Typography variant="h3" className={classes.headerTitle}>
-            <Location /> LOCATION MANAGER  |  <span>ADD LOCATION</span>
+          <Typography
+            className={classes.headerTitle}
+            variant="h3"
+          >
+            <Users /> &nbsp; CLIENT MANAGER  | &nbsp;  <span>ADD CLIENT</span>
             {/* <sup>
               <Tooltip title="Add Locaition" placement="right-start">
                 <HelpIcon />
@@ -1098,14 +1108,29 @@ const AddLocation = (props) => {
         </div>
 
         <Grid container >
-          <Box display="flex" padding="12px 0px 16px" >
-            <Button component={Link} to="/site-manager/location-manager">
-              <ChevronLeftIcon style={{ color: "#788081" }} />
+          <Box
+            display="flex"
+            padding="12px 0px 16px"
+          >
+            <Button
+              component={Link}
+              to="/site-manager/location-manager"
+            >
+              <ChevronLeftIcon style={{ color: '#788081' }} />
               <Typography className={classes.backTitle}>Back to location manager</Typography>
             </Button>
           </Box>
-          <Grid item xs={12} className="text-left d-flex">
-            <LineStepProgressBar activeIndex={step} labels={labelArray} totalCount={4} handleStep={setStep} />
+          <Grid
+            className="text-left d-flex"
+            item
+            xs={12}
+          >
+            <LineStepProgressBar
+              activeIndex={step}
+              handleStep={setStep}
+              labels={labelArray}
+              totalCount={4}
+            />
           </Grid>
         </Grid>
 
@@ -1114,22 +1139,32 @@ const AddLocation = (props) => {
             onSubmit={handleSubmit}
           >
             <Box margin="8px 0px 16px">
-              <Typography className={classes.subTitle} variant="h6">Input location details</Typography>
+              <Typography
+                className={classes.subTitle}
+                variant="h6"
+              >Input Client Details</Typography>
             </Box>
-            <Grid container spacing={4}>
-              <Grid item xs={12} sm={4}>
+            <Grid
+              container
+              spacing={4}
+            >
+              <Grid
+                item
+                sm={4}
+                xs={12}
+              >
                 <Box >
                   <TextField
-                    type="text"
-                    label="Location Name"
-                    placeholder="Enter location name"
-                    name="name"
-                    className={brandClasses.shrinkTextField}
-                    onChange={handleChange}
-                    value={formState.name || ''}
-                    required
-                    fullWidth
                     InputLabelProps={{ shrink: true }}
+                    className={brandClasses.shrinkTextField}
+                    fullWidth
+                    label="Client Name"
+                    name="name"
+                    onChange={handleChange}
+                    placeholder="Enter client name"
+                    required
+                    type="text"
+                    value={formState.name || ''}
                     variant="outlined"
                   />
                   <br /><br />
@@ -1147,60 +1182,125 @@ const AddLocation = (props) => {
                       variant="outlined"
                     /> */}
                   <NumberFormat
-                    customInput={TextField}
-                    mask=" "
-                    type="tel"
-                    label="Location Phone Number"
-                    placeholder="Enter location phone number"
-                    name="phone"
-                    className={brandClasses.shrinkTextField}
-                    onChange={handleChange}
-                    value={formState.phone || ''}
-                    required
-                    fullWidth
                     InputLabelProps={{ shrink: true }}
+                    className={brandClasses.shrinkTextField}
+                    customInput={TextField}
+                    fullWidth
+                    label="Client Phone Number"
+                    mask=" "
+                    name="phone"
+                    onChange={handleChange}
+                    placeholder="Enter client phone number"
+                    required
+                    type="tel"
+                    value={formState.phone || ''}
+                    variant="outlined"
+                  />
+                  <br /><br />
+                  <TextField
+                    InputLabelProps={{ shrink: true }}
+                    className={brandClasses.shrinkTextField}
+                    fullWidth
+                    label="Client Email Address"
+                    name="email"
+                    onChange={handleChange}
+                    placeholder="Enter email address"
+                    required
+                    type="email"
+                    value={formState.email || ''}
                     variant="outlined"
                   />
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={4}>
-                <Box height="100%">
-                  <div className={brandClasses.uploadContanier} style={{ height: '100%' }}>
-                    <Typography className={brandClasses.uploadTitle}>Upload Site Logo</Typography>
-                    <Typography display="inline" className={brandClasses.uploadDesc} style={{ padding: '4px' }}>Select your file or drag and drop it here</Typography>
+              <Grid
+                item
+                sm={4}
+                xs={12}
+              >
+                <Box >
+                  <div
+                    className={brandClasses.uploadContanier}
+                    style={{ height: '100%' }}
+                  >
+                    <Typography className={brandClasses.uploadTitle}>Upload Client Logo</Typography>
+                    <Typography
+                      className={brandClasses.uploadDesc}
+                      display="inline"
+                      style={{ padding: '4px' }}
+                    >Select your file or drag and drop it here</Typography>
                     <div className={classes.uploadImageContainer}>
-                      <input type="file" accept="image/*" className={brandClasses.uploadInput} id="icon-button-file" onChange={handlePhotoChange} />
-                      <label htmlFor="icon-button-file" style={{ cursor: 'pointer' }}>
-                        <img src="/images/svg/upload_cloud.svg" alt="" />
-                        <Typography>UPLOAD<br />PHOTO</Typography>
-                        {imgCompressionLoading ? <CircularProgress size={20} className={brandClasses.progressSpinner} /> : ''}
+                      <input
+                        accept="image/*"
+                        className={brandClasses.uploadInput}
+                        id="icon-button-file"
+                        onChange={handlePhotoChange}
+                        type="file"
+                      />
+                      <label
+                        htmlFor="icon-button-file"
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <img
+                          alt=""
+                          src="/images/svg/upload_cloud.svg"
+                        />
+                        <Typography className={brandClasses.uploadPhotoLabel}>UPLOAD<br />PHOTO</Typography>
+                        {imgCompressionLoading ? <CircularProgress
+                          className={brandClasses.progressSpinner}
+                          size={20}
+                        /> : ''}
                       </label>
                     </div>
                   </div>
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={4}>
-                <Box border="dotted 1px #D8D8D8" width="110px" height="110px" display="flex" alignItems="center" justifyContent="center">
+              <Grid
+                item
+                sm={4}
+                xs={12}
+              >
+                <Box
+                  alignItems="center"
+                  border="dotted 1px #D8D8D8"
+                  display="flex"
+                  height="110px"
+                  justifyContent="center"
+                  width="110px"
+                >
                   {imgState.imgURL
-                    ? <img src={imgState.imgURL} className={brandClasses.uploadedPhoto} alt="img" width="100%" />
+                    ? <img
+                      src={imgState.imgURL}
+                        className={brandClasses.uploadedPhoto}
+                        alt="img"
+                        width="100%"
+                      />
                     : formState.site_logo
-                      ? <img src={apiUrl + formState.site_logo} className={brandClasses.uploadedPhoto} alt="img" width="100%" />
+                      ? <img
+                        src={apiUrl + formState.site_logo}
+                          className={brandClasses.uploadedPhoto}
+                          alt="img"
+                          width="100%"
+                        />
                       : <Typography className={classes.uploadDesc}>PHOTO<br /> PREVIEW</Typography>
                   }
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={8}>
+              <Grid
+                item
+                  xs={12}
+                  sm={8}
+              >
                 <TextField
-                  type="text"
-                  label="Address"
-                  placeholder="Enter address"
-                  name="address"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleChange}
-                  value={formState.address || ''}
-                  required
-                  fullWidth
                   InputLabelProps={{ shrink: true }}
+                  className={brandClasses.shrinkTextField}
+                  fullWidth
+                  label="Address"
+                  name="address"
+                  onChange={handleChange}
+                  placeholder="Enter address"
+                  required
+                  type="text"
+                  value={formState.address || ''}
                   variant="outlined"
                 />
               </Grid>
@@ -1290,8 +1390,14 @@ const AddLocation = (props) => {
               {/* <Grid item xs={12} sm={4}></Grid> */}
             </Grid>
             <div className={brandClasses.footerMessage}>
-              {displayError ? <Alert severity="error" onClose={() => { closeErrorMessage() }}>{displayError}</Alert> : null}
-              {displaySuccess ? <Alert severity="success" onClose={() => { closeSuccessMessage() }}>{displaySuccess}</Alert> : null}
+              {displayError ? <Alert
+                onClose={() => { closeErrorMessage() }}
+                severity="error"
+              >{displayError}</Alert> : null}
+              {displaySuccess ? <Alert
+                onClose={() => { closeSuccessMessage() }}
+                severity="success"
+              >{displaySuccess}</Alert> : null}
             </div>
             <div className={brandClasses.footerButton}>
               {/* <Button
@@ -1303,8 +1409,14 @@ const AddLocation = (props) => {
               >
                 NEXT {loading ? <CircularProgress size={20} className={brandClasses.progressSpinner} /> : ''}
               </Button> */}
-              <TextButton type="submit" disabled={loading}>
-                NEXT {loading ? <CircularProgress size={20} className={brandClasses.progressSpinner} /> : ''}
+              <TextButton
+                disabled={loading}
+                type="submit"
+              >
+                NEXT {loading ? <CircularProgress
+                  className={brandClasses.progressSpinner}
+                  size={20}
+                /> : ''}
               </TextButton>
             </div>
           </form>
@@ -1315,102 +1427,70 @@ const AddLocation = (props) => {
             onSubmit={handleSubmit}
           >
             <Box margin="8px 0px 16px">
-              <Typography className={classes.subTitle}>Input administrator details</Typography>
+              <Typography className={classes.subTitle}>Input Client Details</Typography>
             </Box>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={4}>
+            <Grid
+              container
+              spacing={2}
+            >
+              <Grid
+                item
+                sm={4}
+                xs={12}
+              >
                 <TextField
-                  type="text"
-                  label="Administrator First Name"
-                  placeholder="Enter first name"
-                  name="admin_first_name"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleChange}
-                  value={formState.admin_first_name || ''}
-                  required
-                  fullWidth
                   InputLabelProps={{ shrink: true }}
+                  className={brandClasses.shrinkTextField}
+                  fullWidth
+                  label="Location Name"
+                  name="location_name"
+                  onChange={handleChange}
+                  placeholder="Enter location name"
+                  required
+                  type="text"
+                  value={formState.location_name || ''}
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  type="text"
-                  label="Administrator Last Name"
-                  placeholder="Enter last name"
-                  name="admin_last_name"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleChange}
-                  value={formState.admin_last_name || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}></Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid
+                item
+                sm={4}
+                xs={12}
+              >
                 <NumberFormat
+                  InputLabelProps={{ shrink: true }}
+                  className={brandClasses.shrinkTextField}
                   customInput={TextField}
+                  fullWidth
+                  label="Location Phone Number"
                   mask=" "
-                  type="tel"
-                  label="Administrator Phone Number"
-                  placeholder="Enter administrator phone number"
                   name="admin_office_phone"
-                  className={brandClasses.shrinkTextField}
                   onChange={handleChange}
+                  placeholder="Enter phone number"
+                  required
+                  type="tel"
                   value={formState.admin_office_phone || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs={12} sm={2}>
-                <TextField
-                  type="text"
-                  label="Ext."
-                  placeholder="Enter ext."
-                  name="admin_office_ext"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleChange}
-                  value={formState.admin_office_ext || ''}
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  type="email"
-                  label="Administrator Email"
-                  placeholder="Enter administrator email"
-                  name="admin_email"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleChange}
-                  value={formState.admin_email || ''}
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                  required
-                />
-              </Grid>
-              <Grid item sm={12} className="mb-1">
-                {/* <Button
-                  variant="contained"
-                  className={classes.greenBtn}
-                  startIcon={<AddIcon />}
-                  onClick={toggleEocView}
+              <Grid
+                item
+                sm={4}
+                xs={12}
+              />
+              
+              <Grid
+                className="mb-1"
+                item
+                sm={12}
+              >
+                <TextButton
+                  category="Icon"
                   disabled={eocView}
-                // component={Link}
-                // to="/site-manager/add-location"
+                  onClick={toggleEocView}
                 >
-                  EOC DETAILS
-                </Button> */}
-                <TextButton category="Icon" onClick={toggleEocView}
-                  disabled={eocView}>
                   <AddIcon />
-                  EOC DETAILS
+                  ADD Client location
                 </TextButton>
               </Grid>
             </Grid>
@@ -1418,100 +1498,102 @@ const AddLocation = (props) => {
             {eocView && (
               <>
                 <Box margin="8px 0px 16px">
-                  <Typography className={classes.subTitle}>Input EOC details</Typography>
+                  <Typography className={classes.subTitle} />
                 </Box>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={4}>
+                <Grid
+                  container
+                  spacing={2}
+                >
+                  <Grid
+                    item
+                    sm={4}
+                    xs={12}
+                  >
                     <TextField
-                      type="text"
-                      label="EOC First Name"
-                      placeholder="Enter first name"
-                      name="eoc_first_name"
-                      className={brandClasses.shrinkTextField}
-                      onChange={handleChange}
-                      value={formState.eoc_first_name || ''}
-                      fullWidth
                       InputLabelProps={{ shrink: true }}
+                      className={brandClasses.shrinkTextField}
+                      fullWidth
+                      label="Location Name"
+                      name="eoc_location_name"
+                      onChange={handleChange}
+                      placeholder="Enter location name"
+                      required
+                      type="text"
+                      value={formState.eoc_location_name || ''}
                       variant="outlined"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={4}>
-                    <TextField
-                      type="text"
-                      label="EOC Last Name"
-                      placeholder="Enter last name"
-                      name="eoc_last_name"
-                      className={brandClasses.shrinkTextField}
-                      onChange={handleChange}
-                      value={formState.eoc_last_name || ''}
-                      fullWidth
+                  <Grid
+                    item
+                    sm={4}
+                    xs={12}
+                  >
+                    <NumberFormat
                       InputLabelProps={{ shrink: true }}
+                      className={brandClasses.shrinkTextField}
+                      customInput={TextField}
+                      fullWidth
+                      label="Location Phone Number"
+                      mask=" "
+                      name="eoc_office_phone"
+                      onChange={handleChange}
+                      placeholder="Enter phone number"
+                      required
+                      type="tel"
+                      value={formState.eoc_office_phone || ''}
                       variant="outlined"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={2} className={classes.eoc_closeIcon}>
+                  <Grid
+                    className={classes.eoc_closeIcon}
+                    item
+                    sm={2}
+                    xs={12}
+                  >
                     <CloseIcon onClick={toggleEocView} />
                   </Grid>
-                  <Grid item xs={12} sm={2}></Grid>
-                  <Grid item xs={12} sm={4}>
-                    <NumberFormat
-                      customInput={TextField}
-                      mask=" "
-                      type="tel"
-                      label="EOC Phone Number"
-                      placeholder="Enter EOC phone number"
-                      name="eoc_office_phone"
-                      className={brandClasses.shrinkTextField}
-                      onChange={handleChange}
-                      value={formState.eoc_office_phone || ''}
-                      fullWidth
-                      InputLabelProps={{ shrink: true }}
-                      variant="outlined"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={2}>
+                  <Grid
+                    item
+                    sm={2}
+                    xs={12}
+                  />
+                  <Grid
+                    item
+                    sm={8}
+                    xs={12}
+                  >
                     <TextField
+                      InputLabelProps={{ shrink: true }}
+                      className={brandClasses.shrinkTextField}
+                      fullWidth
+                      label="Address"
+                      name="eoc_address"
+                      onChange={handleChange}
+                      placeholder="Enter address"
+                      required
                       type="text"
-                      label="EOC Ext."
-                      placeholder="Ext."
-                      name="eoc_ext"
-                      className={brandClasses.shrinkTextField}
-                      onChange={handleChange}
-                      value={formState.eoc_ext || ''}
-                      fullWidth
-                      InputLabelProps={{ shrink: true }}
+                      value={formState.eoc_address || ''}
                       variant="outlined"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={4}>
-                    <TextField
-                      type="email"
-                      label="EOC Email"
-                      placeholder="Enter EOC email"
-                      name="eoc_email"
-                      className={brandClasses.shrinkTextField}
-                      onChange={handleChange}
-                      value={formState.eoc_email || ''}
-                      fullWidth
-                      InputLabelProps={{ shrink: true }}
-                      variant="outlined"
-                    />
-                  </Grid>
+                  
+                  <Grid
+                    item
+                    sm={4}
+                    xs={12}
+                  />
                 </Grid>
               </>
             )}
             <div className={brandClasses.footerButton}>
-              {/* <Button
-                className={brandClasses.button}
-                classes={{ disabled: brandClasses.buttonDisabled }}
+              <TextButton
                 disabled={loading}
                 type="submit"
-                style={{ borderRadius: '4px' }}
               >
-                NEXT {loading ? <CircularProgress size={20} className={brandClasses.progressSpinner} /> : ''}
-              </Button> */}
-              <TextButton disabled={loading} type="submit">
-                NEXT {loading ? <CircularProgress size={20} className={brandClasses.progressSpinner} /> : ''}
+                NEXT {loading ? <CircularProgress
+                  className={brandClasses.progressSpinner}
+                  size={20}
+                /> : ''}
               </TextButton>
             </div>
           </form>
@@ -1524,226 +1606,175 @@ const AddLocation = (props) => {
             <Box margin="8px 0px 16px">
               <Typography className={classes.subTitle}>Input Provider Information</Typography>
             </Box>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={4}>
+            <Grid
+              container
+              spacing={2}
+            >
+              <Grid
+                item
+                sm={4}
+                xs={12}
+              >
                 <TextField
+                  InputLabelProps={{ shrink: true }}
+                  className={brandClasses.shrinkTextField}
+                  fullWidth
+                  label="Provider Name"
+                  name="name"
+                  onChange={handleProviderChange}
+                  placeholder="Enter name"
+                  required
                   type="text"
-                  label="Provider First Name"
-                  placeholder="Enter first name"
-                  name="first_name"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleProviderChange}
-                  value={formState.provider.first_name || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
+                  value={formState.provider.name || ''}
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  type="text"
-                  label="Provider Last Name"
-                  placeholder="Enter last name"
-                  name="last_name"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleProviderChange}
-                  value={formState.provider.last_name || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <NpiInput
-                  label="NPI"
-                  placeholder="Enter NPI"
-                  name="npi"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleProviderChange}
-                  value={formState.provider.npi || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid
+                item
+                sm={4}
+                xs={12}
+              >
                 <NumberFormat
+                  InputLabelProps={{ shrink: true }}
+                  className={brandClasses.shrinkTextField}
                   customInput={TextField}
+                  fullWidth
+                  label="Provider Phone Number"
                   mask=" "
-                  type="tel"
-                  label="Phone Number"
-                  placeholder="Enter phone number"
                   name="phone"
-                  className={brandClasses.shrinkTextField}
                   onChange={handleProviderChange}
+                  placeholder="Enter phone number"
+                  required
+                  type="tel"
                   value={formState.provider.phone || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs={12} sm={2}>
+              <Grid
+                item
+                sm={4}
+                xs={12}
+              />
+
+              <Grid
+                item
+                sm={4}
+                xs={12}
+              >
                 <TextField
-                  type="text"
-                  label="EOC Ext."
-                  placeholder="Ext."
-                  name="ext"
+                  InputLabelProps={{ shrink: true }}
                   className={brandClasses.shrinkTextField}
-                  onChange={handleProviderChange}
-                  value={formState.provider.ext || ''}
                   fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  type="email"
-                  label="Email"
-                  placeholder="Enter email"
+                  label="Provider Email"
                   name="email"
-                  className={brandClasses.shrinkTextField}
                   onChange={handleProviderChange}
+                  placeholder="Enter email"
+                  required
+                  type="email"
                   value={formState.provider.email || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs={12} sm={2}></Grid>
-              <Grid item xs={12} sm={8}>
+              <Grid
+                item
+                sm={4}
+                xs={12}
+              >
+                <NpiInput
+                  InputLabelProps={{ shrink: true }}
+                  className={brandClasses.shrinkTextField}
+                  fullWidth
+                  label="Provider NPI Number"
+                  name="npi"
+                  onChange={handleProviderChange}
+                  placeholder="Enter NPI"
+                  required
+                  value={formState.provider.npi || ''}
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid
+                item
+                sm={4}
+                xs={12}
+              />
+
+              <Grid
+                item
+                sm={8}
+                xs={12}
+              >
                 <TextField
-                  type="text"
+                  InputLabelProps={{ shrink: true }}
+                  className={brandClasses.shrinkTextField}
+                  fullWidth
                   label="Address"
-                  placeholder="Enter address"
                   name="address"
-                  className={brandClasses.shrinkTextField}
                   onChange={handleProviderChange}
+                  placeholder="Enter address"
+                  required
+                  type="text"
                   value={formState.provider.address || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
                   variant="outlined"
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={4}>
-                <TextField
-                  type="text"
-                  label="Address 2"
-                  placeholder="Enter apt, suite, floor, etc"
-                  name="address2"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleProviderChange}
-                  value={formState.provider.address2 || ''}
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                />
-              </Grid> */}
-              {/* <Grid item xs={12} sm={4}>
-                <TextField
-                  type="text"
-                  label="County"
-                  placeholder="Enter County"
-                  name="county"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleProviderChange}
-                  value={formState.provider.county || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                />
-              </Grid> */}
-              {/* <Grid item xs={12} sm={4}>
-                <TextField
-                  type="text"
-                  label="City"
-                  placeholder="Enter city"
-                  name="city"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleProviderChange}
-                  value={formState.provider.city || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                />
-              </Grid> */}
-              {/* <Grid item xs={12} sm={2}>
-                <FormControl
-                  className={brandClasses.shrinkTextField}
-                  required
-                  fullWidth
-                  variant="outlined"
-                >
-                  <InputLabel shrink className={brandClasses.selectShrinkLabel}>State</InputLabel>
-                  <Select
-                    onChange={handleProviderChange}
-                    label="State* "
-                    name="state"
-                    displayEmpty
-                    value={formState.provider.state || ''}
-                  >
-                    <MenuItem value=''>
-                      <Typography className={brandClasses.selectPlaceholderGray}>Select State</Typography>
-                    </MenuItem>
-                    {getStates.map((state, index) => (
-                      <MenuItem key={index} value={state.text}>{state.text}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={2}>
-                <ZipCodeInput
-                  label="Zip Code"
-                  placeholder="Enter zip"
-                  name="zip_code"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleProviderChange}
-                  value={formState.provider.zip_code || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                  style={{ height: 52 }}
-                />
-              </Grid> */}
-              <Grid item xs={12} sm={4}></Grid>
-              <Grid item sm={12} className="mb-1">
-                {/* <Button
-                  variant="contained"
+             
+              <Grid
+                item
+                sm={4}
+                xs={12}
+              />
+              <Grid
+                className="mb-1"
+                item
+                sm={12}
+              >
+                <Button
                   className={classes.greenBtn}
                   onClick={toggleEocView}
+                  variant="contained"
                 >
+                  <img
+                    alt="send"
+                    src="/images/svg/send.svg"
+                    style={{ width: 25, marginRight: '8px' }}
+                  />
+                  Send signature request
+                </Button>
+                {/* <TextButton onClick={toggleEocView}>
                   <img src="/images/svg/send.svg" alt="send" style={{ width: 25, marginRight: '8px' }} />
                   Send signature request
-                </Button> */}
-                <TextButton onClick={toggleEocView}>
-                  <img src="/images/svg/send.svg" alt="send" style={{ width: 25, marginRight: '8px' }} />
-                  Send signature request
-                </TextButton>
+                </TextButton> */}
               </Grid>
-              <Grid item sm={12} >
+              <Grid
+                item
+                sm={12}
+              >
                 <FormControlLabel
-                  control={<Checkbox onChange={handleProviderChange} name="send_signature_request_email" checked={formState.provider.send_signature_request_email} />}
-                  label="Email"
                   className={classes.providerCheckbox}
+                  control={<Checkbox
+                    checked={formState.provider.send_signature_request_email}
+                    name="send_signature_request_email"
+                    onChange={handleProviderChange}
+                           />}
+                  label="Email"
                 />
                 <FormControlLabel
-                  control={<Checkbox onChange={handleProviderChange} name="send_signature_request_sms" checked={formState.provider.send_signature_request_sms} />}
-                  label="Text message"
                   className={classes.providerCheckbox}
+                  control={<Checkbox
+                    checked={formState.provider.send_signature_request_sms}
+                    name="send_signature_request_sms"
+                    onChange={handleProviderChange}
+                           />}
+                  label="Text message"
                 />
               </Grid>
             </Grid>
             <div className={brandClasses.footerMessage}>
-              {displayError ? <Alert severity="error" onClose={() => { closeErrorMessage() }}>{displayError}</Alert> : null}
+              {displayError ? <Alert
+                onClose={() => { closeErrorMessage() }}
+                severity="error"
+              >{displayError}</Alert> : null}
             </div>
             <div className={brandClasses.footerButton}>
               {/* <Button
@@ -1755,8 +1786,14 @@ const AddLocation = (props) => {
               >
                 NEXT {loading ? <CircularProgress size={20} className={brandClasses.progressSpinner} /> : ''}
               </Button> */}
-              <TextButton disabled={loading} type="submit">
-                NEXT {loading ? <CircularProgress size={20} className={brandClasses.progressSpinner} /> : ''}
+              <TextButton
+                disabled={loading}
+                type="submit"
+              >
+                NEXT {loading ? <CircularProgress
+                  className={brandClasses.progressSpinner}
+                  size={20}
+                /> : ''}
               </TextButton>
             </div>
           </form>
@@ -1767,118 +1804,140 @@ const AddLocation = (props) => {
             onSubmit={handleSubmit}
           >
             <Box margin="8px 0px 16px">
-              <Typography className={classes.subTitle}>Invetory
-                {/* <sup>
-                  {' '}
-                  <Tooltip title={'Select Inventory'} placement="right-start">
-                    <HelpIcon />
-                  </Tooltip>{' '}
-                </sup> */}
-              </Typography>
+              <Typography className={classes.subTitle}>Add interface</Typography>
             </Box>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={3} className={brandClasses.padding8}>
-                <Autocomplete
-                  multiple
-                  options={inventory}
-                  getOptionLabel={option => `${option.item_type} - ${option.remaining_quantity}`}
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleInventoryChange}
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      label='Select Inventory'
-                      name='Inventory'
-                      placeholder='All Inventory'
-                      variant='outlined'
-                      InputLabelProps={{ shrink: true }}
-                      InputProps={{
-                        ...params.InputProps,
-                        endAdornment: params.InputProps.endAdornment
-                      }}
-                    />
-                  )}
-                />
-              </Grid>
-            </Grid>
-            <Box margin="8px 0px 16px">
-              <Typography className={classes.subTitle}>Input Operations Information
-                {/* <sup>
-                  {' '}
-                  <Tooltip title={'Input Operations Information'} placement="right-start">
-                    <HelpIcon />
-                  </Tooltip>{' '}
-                </sup> */}
-              </Typography>
-            </Box>
+            
             <Box className={classes.operationContainer}>
-              <Typography variant="h6" className={classes.operationTimes}>Operations Times&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span style={{ color: '#DE50A4', fontSize: '12px' }}>Total Vaccine: {inventoryAvailableCount.vaccine}</span>&nbsp;&nbsp;&nbsp;
-                <span style={{ color: '#3ECCCD', fontSize: '12px' }}>Total PCR: {inventoryAvailableCount.pcr}</span>&nbsp;&nbsp;&nbsp;
-                <span style={{ color: '#FBC23C', fontSize: '12px' }}>Total Antigen: {inventoryAvailableCount.antigen}</span>&nbsp;&nbsp;&nbsp;
-                {inventoryError ? <span style={{ color: '#DD2525', fontSize: '12px' }}>{inventoryError}</span> : ''}
-              </Typography>
-              <Grid container className={classes.operationHeader}>
-                <Grid item xs={3}>Day of the week</Grid>
-                <Grid item xs={4} style={{ textAlign: 'center' }} >Hours of operation</Grid>
-                <Grid item xs={5} style={{ textAlign: 'center' }}>Slots</Grid>
+             
+              <Grid
+                className={classes.operationHeader}
+                container
+              >
+                <Grid
+                  item
+                  xs={12}
+                >INTERFACE OPTIONS</Grid>
               </Grid>
-              {timeSlotError ? <Typography variant="h6" style={{ color: 'red', textAlign: 'center' }}>{timeSlotError}</Typography> : ''}
+              {timeSlotError ? <Typography
+                style={{ color: 'red', textAlign: 'center' }}
+                variant="h6"
+              >{timeSlotError}</Typography> : ''}
               {operationState.map((day, day_index) => (
                 <Accordion
-                  key={day_index}
-                  expanded={expanded === `panel${day_index}`}
-                  onChange={handleAccordianChange(day_index)}
                   classes={{ expanded: classes.accExpanded }}
+                  expanded={expanded === `panel${day_index}`}
+                  key={day_index}
+                  onChange={handleAccordianChange(day_index)}
                 >
                   <AccordionSummary
                     className={clsx(classes.accordion)}
                     classes={{ content: classes.accordionSummary }}
                   >
-                    <Grid container
+                    <Grid
+                      alignItems="center"
+                      container
                       direction="row"
                       justify="space-between"
-                      alignItems="center">
-                      <Grid item xs={2} style={{ paddingLeft: '24px' }}>
+                    >
+                      <Grid
+                        item
+                        style={{ paddingLeft: '24px' }}
+                        xs={2}
+                      >
                         <div className={classes.dayRow}>
-                          {day.day_name}&ensp;
-                                    {expanded === `panel${day_index}`
-                            ? <img src="/images/svg/chevron_blue_down.svg" style={{ height: 12, width: 18 }} alt="" />
-                            : <img src="/images/svg/chevron_blue_right.svg" style={{ height: 18, width: 12 }} alt="" />
+                          {day.day_name} &ensp;
+                          {expanded === `panel${day_index}`
+                            ? <img
+                                src="/images/svg/chevron_blue_down.svg"
+                                style={{ height: 12, width: 18 }}
+                                alt=""
+                              />
+                            : <img
+                                src="/images/svg/chevron_blue_right.svg"
+                                style={{ height: 18, width: 12 }}
+                                alt=""
+                              />
                           }
                         </div>
                       </Grid>
-                      <Grid item xs={5} style={{ textAlign: 'center' }} className={classes.timeText} >
+                      <Grid
+                        className={classes.timeText}
+                        item
+                        style={{ textAlign: 'center' }}
+                        xs={5}
+                      >
                         {day.active
                           ? day.time_slots.map((ts, x) =>
-                            ts.checked && (<Typography key={x} style={{ color: '#0F84A9' }}>{moment(ts.start_time, 'HH:mm').format('LT') + ' - ' + moment(ts.end_time, 'HH:mm').format('LT')}</Typography>)
+                            ts.checked && (<Typography
+                              key={x}
+                              style={{ color: '#0F84A9' }}
+                            >{moment(ts.start_time, 'HH:mm').format('LT') + ' - ' + moment(ts.end_time, 'HH:mm').format('LT')}</Typography>)
                           )
-                          : <Typography style={{ color: '#D8D8D8', fontWeight: "600" }}>Closed</Typography>
+                          : <Typography style={{ color: '#D8D8D8', fontWeight: '600' }}>Closed</Typography>
                         }
                       </Grid>
-                      <Grid item xs={5} >
+                      <Grid item xs={5}>
                         {day.active
                           ? day.time_slots.map((item, x) =>
                             item.checked && (
-                              <Grid container direction="row" justify="center" alignItems="center" spacing={1}>
-                                <Grid item sm={4}>
-                                  <Typography key={x} align="left" style={{ color: '#043B5D' }} display="inline">
+                              <Grid
+                                alignItems="center"
+                                container
+                                direction="row"
+                                justify="center"
+                                spacing={1}
+                              >
+                                <Grid
+                                  item
+                                  sm={4}
+                                >
+                                  <Typography
+                                    align="left"
+                                    display="inline"
+                                    key={x}
+                                    style={{ color: '#043B5D' }}
+                                  >
                                     <span style={{ color: '#DE50A4' }}>Vaccine:</span>
                                   </Typography>
-                                  <Typography align="left" display="inline"> {item.vaccine.checked ? item.vaccine.value : 0}</Typography>
+                                  <Typography
+                                    align="left"
+                                    display="inline"
+                                  > {item.vaccine.checked ? item.vaccine.value : 0}</Typography>
                                 </Grid>
-                                <Grid item sm={4}>
-                                  <Typography key={x} align="left" style={{ color: '#043B5D' }} display="inline">
+                                <Grid
+                                  item
+                                  sm={4}
+                                >
+                                  <Typography
+                                    align="left"
+                                    display="inline"
+                                    key={x}
+                                    style={{ color: '#043B5D' }}
+                                  >
                                     <span style={{ color: '#3ECCCD' }}>PCR:</span></Typography>
-                                  <Typography align="left" display="inline"> {item.pcr.checked ? item.pcr.value : 0}</Typography></Grid>
-                                <Grid item sm={4}>
-                                  <Typography key={x} align="left" style={{ color: '#043B5D' }} display="inline">
+                                  <Typography
+                                    align="left"
+                                    display="inline"
+                                  > {item.pcr.checked ? item.pcr.value : 0}</Typography></Grid>
+                                <Grid
+                                  item
+                                  sm={4}
+                                >
+                                  <Typography
+                                    align="left"
+                                    display="inline"
+                                    key={x}
+                                    style={{ color: '#043B5D' }}
+                                  >
                                     <span style={{ color: '#FBC23C' }}>Antigen:</span></Typography>
-                                  <Typography align="left" display="inline"> {item.antigen.checked ? item.antigen.value : 0}</Typography></Grid>
+                                  <Typography
+                                    align="left"
+                                    display="inline"
+                                  > {item.antigen.checked ? item.antigen.value : 0}</Typography></Grid>
                               </Grid>
                             )
                           )
-                          : <Typography style={{ color: '#D8D8D8', fontWeight: "600", textAlign: 'center' }}>- - -</Typography>
+                          : <Typography style={{ color: '#D8D8D8', fontWeight: '600', textAlign: 'center' }}>- - -</Typography>
                         }
                       </Grid>
                     </Grid>
@@ -1887,46 +1946,73 @@ const AddLocation = (props) => {
                     <Grid container  >
                       {day.time_slots.map((item, slot_index) => (
                         <React.Fragment key={slot_index}>
-                          <Grid item xs={2}>
-                          </Grid>
-                          <Grid item xs={1}>
-                          </Grid>
-                          <Grid item xs={4} >
+                          <Grid
+                            item
+                            xs={2}
+                          />
+                          <Grid
+                            item
+                            xs={1}
+                          />
+                          <Grid
+                            item
+                            xs={4}
+                          >
                             {!item.edit
                               ? <>
-                                <Grid container direction="row">
-                                  <Grid item sm={8}>
+                                <Grid
+                                  container
+                                  direction="row"
+                                >
+                                  <Grid
+                                    item
+                                    sm={8}
+                                  >
                                     <Typography
-                                      variant="h5"
                                       className={classes.timeDuration}
+                                      variant="h5"
                                     >
                                       <Checkbox
-                                        onChange={handleHoursCheckChange(day_index, slot_index)}
                                         checked={item.checked}
                                         className={item.checked ? classes.daySlotCheckboxhecked : classes.daySlotCheckbox}
+                                        onChange={handleHoursCheckChange(day_index, slot_index)}
                                       />
                                       <span style={{ color: item.checked ? '#043B5D' : '#788081' }}>
                                         {moment(item.displayStartTime).format('LT') + ' - ' + moment(item.displayEndTime).format('LT')}
                                       </span>
                                     </Typography>
                                   </Grid>
-                                  <Grid item sm={2}>
+                                  <Grid
+                                    item
+                                    sm={2}
+                                  >
                                     <Typography
-                                      variant="h5"
                                       className={classes.timeDuration}
+                                      variant="h5"
                                     >
-                                      <IconButton style={{ padding: '4px' }} onClick={() => handleTimeSlotEdit(day_index, slot_index, true)} classes={{ root: classes.editIcon }}>
+                                      <IconButton
+                                        classes={{ root: classes.editIcon }}
+                                        onClick={() => handleTimeSlotEdit(day_index, slot_index, true)}
+                                        style={{ padding: '4px' }}
+                                      >
                                         <Edit />
                                       </IconButton>
                                     </Typography>
                                   </Grid>
 
-                                  <Grid item sm={2}>
+                                  <Grid
+                                    item
+                                    sm={2}
+                                  >
                                     <Typography
-                                      variant="h5"
                                       className={classes.timeDuration}
+                                      variant="h5"
                                     >
-                                      <IconButton style={{ padding: '4px' }} onClick={() => handleTimeSlotDelete(day_index, slot_index)} classes={{ root: classes.editIcon }}>
+                                      <IconButton
+                                        classes={{ root: classes.editIcon }}
+                                        onClick={() => handleTimeSlotDelete(day_index, slot_index)}
+                                        style={{ padding: '4px' }}
+                                      >
                                         <Delete />
                                       </IconButton>
                                     </Typography>
@@ -1934,104 +2020,148 @@ const AddLocation = (props) => {
                                 </Grid>
                               </>
                               :
-                              <Grid container direction="row" alignItems="center" style={{ padding: '0 12px' }}>
-                                <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils}>
+                              <Grid
+                                alignItems="center"
+                                container
+                                direction="row"
+                                style={{ padding: '0 12px' }}
+                              >
+                                <MuiPickersUtilsProvider
+                                  libInstance={moment}
+                                  utils={MomentUtils}
+                                >
                                   <KeyboardTimePicker
-                                    value={item.displayStartTime}
-                                    onChange={handleStartTimeChange(day_index, slot_index)}
                                     className={classes.timeField}
-                                    keyboardIcon={<AccessTimeIcon style={{ color: "#9B9B9B" }} />}
+                                    keyboardIcon={<AccessTimeIcon style={{ color: '#9B9B9B' }} />}
+                                    onChange={handleStartTimeChange(day_index, slot_index)}
+                                    value={item.displayStartTime}
                                   />
-                                  <Typography variant="h5" className={classes.operationDescription}>
+                                  <Typography
+                                    className={classes.operationDescription}
+                                    variant="h5"
+                                  >
                                     {'-'}
                                   </Typography>
                                   <KeyboardTimePicker
-                                    value={item.displayEndTime}
-                                    onChange={handleEndTimeChange(day_index, slot_index)}
                                     className={classes.timeField}
-                                    keyboardIcon={<AccessTimeIcon style={{ color: "#9B9B9B" }} />}
+                                    keyboardIcon={<AccessTimeIcon style={{ color: '#9B9B9B' }} />}
+                                    onChange={handleEndTimeChange(day_index, slot_index)}
+                                    value={item.displayEndTime}
                                   // minDate={day.displayStartTime}
                                   />
                                 </MuiPickersUtilsProvider>
-                                <IconButton onClick={() => handleTimeSlotEdit(day_index, slot_index, false)} classes={{ root: classes.editIcon }}>
+                                <IconButton
+                                  classes={{ root: classes.editIcon }}
+                                  onClick={() => handleTimeSlotEdit(day_index, slot_index, false)}
+                                >
                                   <CancelOutlinedIcon />
                                 </IconButton>
                               </Grid>
                             }
                           </Grid>
-                          <Grid item xs={5} container spacing={1}>
-                            <Grid item xs={3}>
-                              <Typography className={operationErrorsState[day_index].timeSlotError[slot_index].vaccine ? classes.slotSubHeaderError : item.vaccine.checked ? classes.slotSubHeaderChecked : classes.slotSubHeader} style={{ fontWeight: "600" }}> Vaccine</Typography>
+                          <Grid
+                            container
+                            item
+                            spacing={1}
+                            xs={5}
+                          >
+                            <Grid
+                              item
+                              xs={3}
+                            >
                               <Typography
-                                variant="h5"
+                                className={operationErrorsState[day_index].timeSlotError[slot_index].vaccine ? classes.slotSubHeaderError : item.vaccine.checked ? classes.slotSubHeaderChecked : classes.slotSubHeader}
+                                style={{ fontWeight: '600' }}
+                              > Vaccine</Typography>
+                              <Typography
                                 className={classes.timeDuration}
+                                variant="h5"
                               >
                                 <Checkbox
-                                  onChange={handleSlotTypeCheckbox(day_index, slot_index, 'vaccine')}
                                   checked={item.vaccine.checked}
                                   className={operationErrorsState[day_index].timeSlotError[slot_index].vaccine ? classes.daySlotCheckboxError : item.checked && item.vaccine.checked ? classes.daySlotCheckboxhecked : classes.daySlotCheckbox}
+                                  onChange={handleSlotTypeCheckbox(day_index, slot_index, 'vaccine')}
                                 />
                                 <FilledInput
-                                  value={item.vaccine.value}
-                                  onChange={handleSlotTypeInput(day_index, slot_index, 'vaccine')}
-                                  // endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
                                   aria-describedby="filled-weight-helper-text"
                                   classes={{ root: operationErrorsState[day_index].timeSlotError[slot_index].vaccine ? classes.filledInputRootError : item.checked && item.vaccine.checked ? classes.filledInputRootChecked : classes.filledInputRoot }}
+                                  // endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
+                                  onChange={handleSlotTypeInput(day_index, slot_index, 'vaccine')}
                                   required
+                                  value={item.vaccine.value}
                                 />
                               </Typography>
                             </Grid>
-                            <Grid item xs={3}>
-                              <Typography className={operationErrorsState[day_index].timeSlotError[slot_index].pcr ? classes.slotSubHeaderError : item.pcr.checked ? classes.slotSubHeaderChecked : classes.slotSubHeader} style={{ fontWeight: "600" }}>PCR</Typography>
+                            <Grid
+                              item
+                              xs={3}
+                            >
                               <Typography
-                                variant="h5"
+                                className={operationErrorsState[day_index].timeSlotError[slot_index].pcr ? classes.slotSubHeaderError : item.pcr.checked ? classes.slotSubHeaderChecked : classes.slotSubHeader}
+                                style={{ fontWeight: '600' }}
+                              >PCR</Typography>
+                              <Typography
                                 className={classes.timeDuration}
+                                variant="h5"
                               >
                                 <Checkbox
-                                  onChange={handleSlotTypeCheckbox(day_index, slot_index, 'pcr')}
                                   checked={item.pcr.checked}
                                   className={operationErrorsState[day_index].timeSlotError[slot_index].pcr ? classes.daySlotCheckboxError : item.checked && item.pcr.checked ? classes.daySlotCheckboxhecked : classes.daySlotCheckbox}
+                                  onChange={handleSlotTypeCheckbox(day_index, slot_index, 'pcr')}
                                 />
                                 <FilledInput
-                                  value={item.pcr.value}
-                                  onChange={handleSlotTypeInput(day_index, slot_index, 'pcr')}
-                                  // endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
                                   aria-describedby="filled-weight-helper-text"
                                   classes={{ root: operationErrorsState[day_index].timeSlotError[slot_index].pcr ? classes.filledInputRootError : item.checked && item.pcr.checked ? classes.filledInputRootChecked : classes.filledInputRoot }}
+                                  // endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
+                                  onChange={handleSlotTypeInput(day_index, slot_index, 'pcr')}
+                                  value={item.pcr.value}
                                 />
                               </Typography>
                             </Grid>
-                            <Grid item xs={3}>
-                              <Typography className={operationErrorsState[day_index].timeSlotError[slot_index].antigen ? classes.slotSubHeaderError : item.antigen.checked ? classes.slotSubHeaderChecked : classes.slotSubHeader} style={{ fontWeight: "600" }}>Antigen</Typography>
+                            <Grid
+                              item
+                              xs={3}
+                            >
                               <Typography
-                                variant="h5"
+                                className={operationErrorsState[day_index].timeSlotError[slot_index].antigen ? classes.slotSubHeaderError : item.antigen.checked ? classes.slotSubHeaderChecked : classes.slotSubHeader}
+                                style={{ fontWeight: '600' }}
+                              >Antigen</Typography>
+                              <Typography
                                 className={classes.timeDuration}
+                                variant="h5"
                               >
                                 <Checkbox
-                                  onChange={handleSlotTypeCheckbox(day_index, slot_index, 'antigen')}
                                   checked={item.antigen.checked}
                                   className={operationErrorsState[day_index].timeSlotError[slot_index].antigen ? classes.daySlotCheckboxError : item.checked && item.antigen.checked ? classes.daySlotCheckboxhecked : classes.daySlotCheckbox}
+                                  onChange={handleSlotTypeCheckbox(day_index, slot_index, 'antigen')}
                                 />
                                 <FilledInput
-                                  value={item.antigen.value}
-                                  onChange={handleSlotTypeInput(day_index, slot_index, 'antigen')}
-                                  // endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
                                   aria-describedby="filled-weight-helper-text"
                                   classes={{ root: operationErrorsState[day_index].timeSlotError[slot_index].antigen ? classes.filledInputRootError : item.checked && item.antigen.checked ? classes.filledInputRootChecked : classes.filledInputRoot }}
+                                  // endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
+                                  onChange={handleSlotTypeInput(day_index, slot_index, 'antigen')}
+                                  value={item.antigen.value}
                                 />
                               </Typography>
                             </Grid>
-                            <Grid item xs={3}>
-                              <Typography className={classes.slotSubHeaderChecked} align="right" style={{ textAlign: 'start', marginLeft: '0px', fontSize: '8px', }}>Slot Difference</Typography>
+                            <Grid
+                              item
+                              xs={3}
+                            >
+                              <Typography
+                                align="right"
+                                className={classes.slotSubHeaderChecked}
+                                style={{ textAlign: 'start', marginLeft: '0px', fontSize: '8px', }}
+                              >Slot Difference</Typography>
                               <Select
-                                onChange={handleSlotDifferenceChange(day_index, slot_index)}
+                                displayEmpty
                                 label="Difference"
                                 name="Slot Difference"
-                                displayEmpty
-                                value={item.time_slot_difference || ''}
+                                onChange={handleSlotDifferenceChange(day_index, slot_index)}
                                 style={{ paddingRight: '18px', paddingLeft: '12px', border: '1px solid #9B9B9B' }}
+                                value={item.time_slot_difference || ''}
                               >
-                                <MenuItem value=''>
+                                <MenuItem value="">
                                   <Typography className={brandClasses.selectPlaceholder}>Select Slot Difference</Typography>
                                 </MenuItem>
                                 <MenuItem value="5">5</MenuItem>
@@ -2041,41 +2171,70 @@ const AddLocation = (props) => {
                                 <MenuItem value="30">30</MenuItem>
                               </Select>
                             </Grid>
-                            <Typography variant="h5" className={classes.slotSubHeaderErrorContent}>{operationErrorsState[day_index].timeSlotError[slot_index].error}</Typography>
+                            <Typography
+                              className={classes.slotSubHeaderErrorContent}
+                              variant="h5"
+                            >{operationErrorsState[day_index].timeSlotError[slot_index].error}</Typography>
                           </Grid>
                         </React.Fragment>
                       ))}
-                      <Grid item xs={3}></Grid>
-                      <Grid item xs={4}>
+                      <Grid
+                        item
+                        xs={3}
+                      />
+                      <Grid
+                        item
+                        xs={4}
+                      >
                         <FormControlLabel
-                          control={<Checkbox onChange={handleClosedChange(day_index)} checked={!day.active} />}
-                          label="Closed"
                           className={!day.active ? classes.dayCheckbox : classes.dayCheckboxChecked}
+                          control={<Checkbox
+                            checked={!day.active}
+                            onChange={handleClosedChange(day_index)}
+                                   />}
+                          label="Closed"
                         />
                       </Grid>
-                      <Grid item xs={5}>
-                      </Grid>
-                      <Grid item xs={3}></Grid>
-                      <Grid item xs={4}>
+                      <Grid
+                        item
+                        xs={5}
+                      />
+                      <Grid
+                        item
+                        xs={3}
+                      />
+                      <Grid
+                        item
+                        xs={4}
+                      >
                         <Button
-                          className={classes.button} style={{ marginLeft: '6px' }}
-                          startIcon={<AddIcon />}
+                          className={classes.button}
                           onClick={addNewTimeSlot(day_index)}
+                          startIcon={<AddIcon />}
+                          style={{ marginLeft: '6px' }}
                         >
                           Add another time slot
                         </Button>
 
                       </Grid>
-                      <Grid item xs={5}>
-                      </Grid>
+                      <Grid
+                        item
+                        xs={5}
+                      />
                     </Grid>
                   </AccordionDetails>
                 </Accordion>
               ))}
             </Box>
             <div className={brandClasses.footerMessage}>
-              {displayError ? <Alert severity="error" onClose={() => { closeErrorMessage() }}>{displayError}</Alert> : null}
-              {displaySuccess ? <Alert severity="success" onClose={() => { closeSuccessMessage() }}>{displaySuccess}</Alert> : null}
+              {displayError ? <Alert
+                onClose={() => { closeErrorMessage() }}
+                severity="error"
+              >{displayError}</Alert> : null}
+              {displaySuccess ? <Alert
+                onClose={() => { closeSuccessMessage() }}
+                severity="success"
+              >{displaySuccess}</Alert> : null}
             </div>
             <div className={brandClasses.footerButton}>
               {/* <Button
@@ -2087,8 +2246,14 @@ const AddLocation = (props) => {
               >
                 DONE {loading ? <CircularProgress size={20} className={brandClasses.progressSpinner} /> : ''}
               </Button> */}
-              <TextButton disabled={loading} type="submit">
-                DONE {loading ? <CircularProgress size={20} className={brandClasses.progressSpinner} /> : ''}
+              <TextButton
+                disabled={loading}
+                type="submit"
+              >
+                DONE {loading ? <CircularProgress
+                  className={brandClasses.progressSpinner}
+                  size={20}
+                /> : ''}
               </TextButton>
             </div>
           </form>
@@ -2096,21 +2261,21 @@ const AddLocation = (props) => {
       </div>
 
       <DialogAlert
-        open={dialogOpen}
-        type={appConstants.DIALOG_TYPE_CONFIRMATION}
-        title={'Location saved successfully.'}
-        message={`Do you want to Add another Location details ?`}
-        onClose={handleDialogClose}
+        message={'Do you want to Add another Location details ?'}
         onAction={handleDialogAction}
+        onClose={handleDialogClose}
+        open={dialogOpen}
+        title={'Location saved successfully.'}
+        type={appConstants.DIALOG_TYPE_CONFIRMATION}
       />
 
       <DialogAlertOperationConfirmation
-        open={dialogOperationOpen}
-        type={appConstants.DIALOG_TYPE_CONFIRMATION}
-        title={'Are you sure?'}
-        message={`Do you want to save without adding operation details ?`}
-        onClose={handleDialogOperationClose}
+        message={'Do you want to save without adding operation details ?'}
         onAction={handleDialogOperationAction}
+        onClose={handleDialogOperationClose}
+        open={dialogOperationOpen}
+        title={'Are you sure?'}
+        type={appConstants.DIALOG_TYPE_CONFIRMATION}
       />
     </div>
   );
@@ -2125,4 +2290,6 @@ AddLocation.propTypes = {
   getInventoryAvailable: PropTypes.func.isRequired
 };
 
-export default connect(null, { addLocation, uploadImage, clearLocations, getInventoryAvailable })(AddLocation);
+export default connect(null, { addLocation, uploadImage, clearLocations,
+  //  getInventoryAvailable 
+})(AddLocation);

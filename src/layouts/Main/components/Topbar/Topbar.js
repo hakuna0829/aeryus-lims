@@ -9,7 +9,7 @@ import { Profile, NotificationPopover } from './components';
 const useStyles = makeStyles(theme => ({
   root: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: '#82BDD1',
+    backgroundColor: theme.palette.brand,
     boxShadow: 'none',
     '& > *': {
       padding: theme.spacing(1),
@@ -123,7 +123,7 @@ const Topbar = props => {
 
 
         <div className={classes.logoCenter}>
-          <img src="/images/svg/Testd_DB_logo.svg" className={classes.logo} alt="logo" />
+          <img src="/images/svg/lims_header_logo.svg" className={classes.logo} alt="logo" />
         </div>
 
         {/* <Profile className={classes.userInfo}/> */}

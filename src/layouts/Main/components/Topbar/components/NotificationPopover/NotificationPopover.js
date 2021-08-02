@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
     border: `1px solid ${theme.palette.white}`,
   },
   notificationBell: {
-    color: theme.palette.blueDark,
+    color: theme.palette.white,
   },
   readNotification: {
     backgroundColor: theme.palette.brandGray
@@ -121,7 +121,7 @@ const useStyles = makeStyles(theme => ({
     padding: '3px 0px'
   },
   itemIcon: {
-    color: '#7094A7',
+    color: '#fff',
     margin: '8px'
   },
   itemText: {
@@ -210,6 +210,7 @@ const NotificationPopover = props => {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  // eslint-disable-next-line react/no-multi-comp
   const NotificationItem = (props) => {
     const { notification, index, subIndex } = props;
 
@@ -243,7 +244,7 @@ const NotificationPopover = props => {
         case /order/.test(notification.type):
           return `/order-tracker?order_id=${notification.db_id}`;
         case /schedule/.test(notification.type):
-          return `/appointment-manager/today`;
+          return '/appointment-manager/today';
         case /inventory/.test(notification.type):
           return `/inventory-manager?inventory_id=${notification.db_id}`;
 
@@ -274,8 +275,8 @@ const NotificationPopover = props => {
       show ?
         <div className={classes.item}>
           <NotificationIcon
-            type={notification.type}
             classes={classes.itemIcon}
+            type={notification.type}
           />
           <div className={classes.itemText}>
             {notification.title} &nbsp;
@@ -283,12 +284,18 @@ const NotificationPopover = props => {
               ?
               <CircularProgress size={20} />
               :
-              <span className={classes.anchorText} onClick={() => onHrefClick()}>
+              <span
+                className={classes.anchorText}
+                onClick={() => onHrefClick()}
+              >
                 {notification.resend ? 'try again' : 'view here'}
               </span>
             }
           </div>
-          <IconButton className={classes.closeIconButton} onClick={() => markAsRead()}>
+          <IconButton
+            className={classes.closeIconButton}
+            onClick={() => markAsRead()}
+          >
             <CloseIcon />
           </IconButton>
         </div>
@@ -299,7 +306,10 @@ const NotificationPopover = props => {
 
   return (
     <div className={classes.root}>
-      <IconButton aria-describedby={id} onClick={handleClick}>
+      <IconButton
+        aria-describedby={id}
+        onClick={handleClick}
+      >
         <Badge
           badgeContent={count}
           classes={{ badge: classes.customBadge }}
@@ -308,42 +318,45 @@ const NotificationPopover = props => {
         </Badge>
       </IconButton>
       <Popover
-        id={id}
-        open={open}
         anchorEl={anchorEl}
-        onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
           horizontal: 'center',
         }}
         className={classes.popover}
         classes={{
           paper: classes.popoverPaper
         }}
+        id={id}
+        onClose={handleClose}
+        open={open}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
       >
         <Grid
+          alignItems="center"
+          className={classes.header}
           container
           direction="row"
           justify="space-between"
-          alignItems="center"
-          className={classes.header}
         >
           <div className={classes.flexConatiner}>
             <Typography className={classes.headerTitle}>Notifications</Typography>
             <IconButton className={classes.headerBellIcon}>
               <Badge
-                variant="dot"
                 classes={{ badge: classes.customBadge }}
+                variant="dot"
               >
                 <NotificationBell className={classes.notificationBell} />
               </Badge>
             </IconButton>
           </div>
-          <IconButton className={classes.closeIconButton} onClick={handleClose}>
+          <IconButton
+            className={classes.closeIconButton}
+            onClick={handleClose}
+          >
             <CloseIcon />
           </IconButton>
         </Grid>
@@ -362,9 +375,9 @@ const NotificationPopover = props => {
                     ?
                     notification.data.map((item, subIndex) => (
                       <NotificationItem
+                        index={index}
                         key={subIndex}
                         notification={item}
-                        index={index}
                         subIndex={subIndex}
                       // data={notificationData}
                       // setNotificationData={setNotificationData}
@@ -404,22 +417,25 @@ const NotificationPopover = props => {
         </List>
         <ListItem
           button
-          component={RouterLink}
-          to={`/all-notifications`}
           className={classes.allNotifiation}
+          component={RouterLink}
+          to={'/all-notifications'}
         >
-          <ListItemText primary="See all recent activity" style={{ textAlign: 'center' }} />
+          <ListItemText
+            primary="See all recent activity"
+            style={{ textAlign: 'center' }}
+          />
         </ListItem>
       </Popover>
 
       <ResendDialog
         dialogOpen={dialogOpen}
         handleDialogClose={handleDialogClose}
-        success={dialogContent.success}
-        message={dialogContent.message}
         handleResend={handleResend}
+        message={dialogContent.message}
         notification_id={dialogContent.notification_id}
         saveLoading={saveLoading}
+        success={dialogContent.success}
       />
     </div>
   );

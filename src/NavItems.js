@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dashboard, Site, Users, Inventory, Test, Settings, Chart, TestManager, NotificationBell } from 'icons';
+import { Dashboard, Users, Inventory, Test, Settings, Chart, TestManager, NotificationBell } from 'icons';
 import Results from 'icons/Results';
 import Doctor from 'icons/Doctor';
 import TestTechnician from 'icons/TestTechnician';
@@ -14,24 +14,24 @@ export default [
     expanded: false,
   },
   {
-    title: 'Location Manager',
-    icon: <Site />,
+    title: 'Client Manager',
+    icon: <Users />,
     module_name: 'SiteManager',
     show: true,
     expanded: false,
     children: [
       {
-        title: 'Sites',
+        title: 'Client A',
         href: '/site-manager/location-manager',
       },
       {
-        title: 'Departments',
+        title: 'Client B',
         href: '/site-manager/department-manager',
       },
-      {
-        title: 'Populations',
-        href: '/site-manager/population-manager',
-      },
+      // {
+      //   title: 'Populations',
+      //   href: '/site-manager/population-manager',
+      // },
       // {
       //   title: 'Shift Manager',
       //   href: '/site-shift-manager',

@@ -17,8 +17,9 @@ const useStyles = makeStyles(theme => ({
     borderTopWidth: 1,
     borderStyle: 'solid',
     borderColor: 'rgba(4,59,93,0.2)',
+    color: '#ffffff80',
     '& .MuiTypography-body1': {
-      color: '#043B5D',
+      color: '#ffffff80',
       fontSize: '12px'
     },
     '&.active': {
@@ -29,14 +30,18 @@ const useStyles = makeStyles(theme => ({
       '& .MuiListItemIcon-root': {
         color: theme.palette.sideMenuActiveColor,
       }
+    },
+    '& .MuiListItemIcon-root': {
+      color: '#ffffff80',
     }
   },
   mainMenuItem: {
-    background: theme.palette.sideMenuBgColor,
+    background: theme.palette.brand,
+    color:'#ffffff80',
     '&:hover':{
       background: theme.palette.sideMenuItemActiveColor,
       '& .MuiTypography-root' :{
-        color:theme.palette.white,
+        color:'#ffffff',
       },
       '& .MuiListItemIcon-root':{
         color:theme.palette.white,
@@ -56,26 +61,26 @@ const useStyles = makeStyles(theme => ({
       color:theme.palette.white
     },
     '& .MuiSvgIcon-root': {
-        color:theme.palette.white
+      color:theme.palette.white
     }
   },
   subMenuItem: {
-    background: '#F8FCFD',
-    color:theme.palette.brandDark,
+    background: theme.palette.brand,
+    color:'theme.palette.brandDark',
     '& .MuiTypography-root' :{
-      color:theme.palette.blueDark
+      color:'#ffffff80',
     },
     '&:hover':{
-      background:theme.palette.sideMenuBgColor,
+      background:theme.palette.sideMenuItemActiveColor,
       '& .MuiTypography-body1':{
-        color:theme.palette.brandDark,
+        color:theme.palette.white,
         fontWeight:600,
       }
     },
     '&.active':{
-      background:theme.palette.sideMenuBgColor,
+      background:theme.palette.brand,
       '& .MuiTypography-body1':{
-        color:theme.palette.brandDark,
+        color:'white',
         fontWeight:600,
       }
     }
@@ -87,8 +92,12 @@ const useStyles = makeStyles(theme => ({
       color:theme.palette.white
     }
   },
+  chevronDarkActive: {
+    color: theme.palette.white,
+    fontSize: '20px'
+  },
   chevronDark: {
-    color: theme.palette.blueDark,
+    color: '#ffffff80',
     fontSize: '20px'
   },
   // chevronLight: {
@@ -128,7 +137,7 @@ const MenuItemNav = props => {
         <IconExpandMore className={classes.chevronDark} />
       )}
       {isExpandable && expanded && (
-        <IconExpandLess className={classes.chevronDark} />
+        <IconExpandLess className={classes.chevronDarkActive} />
       )}
     </MenuSubItemNav>
   );

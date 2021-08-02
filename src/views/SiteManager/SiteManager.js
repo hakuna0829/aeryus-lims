@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import brandStyles from 'theme/brand';
+// import brandStyles from 'theme/brand';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
-import { AppBar, Tabs, Tab } from '@material-ui/core';
-import clsx from 'clsx';
-import LocationManager from './LocationManager';
-import AddLocation from './LocationManager/AddLocation';
+// import clsx from 'clsx';
+import ClientManager from './ClientManager';
+import AddLocation from './ClientManager/AddLocation';
 // import LocationDetails from './LocationManager/LocationDetails';
-import LocationDetailsNew from './LocationManager/LocationDetailsNew';
+import LocationDetailsNew from './ClientManager/LocationDetailsNew';
 import DepartmentManager from './DepartmentManager';
 import AddDepartment from './DepartmentManager/AddDepartment';
 import DepartmentDetails from './DepartmentManager/DepartmentDetails';
@@ -19,18 +18,21 @@ import PopulationDetails from './PopulationManager/PopulationDetails';
 import PopulationUsers from './PopulationManager/PopulationUsers';
 
 const useStyles = makeStyles(theme => ({
+  root:{
+    padding:'24px 0px',
+  },
   appBar: {
     backgroundColor: '#3F9DBA',
     marginTop: theme.spacing(0),
   },
   tabsIndicator: {
     // backgroundColor: theme.palette.white,
-    display: "flex",
-    justifyContent: "center",
-    backgroundColor: "transparent",
-    "& > div": {
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    '& > div': {
       maxWidth: 100,
-      width: "100%",
+      width: '100%',
       backgroundColor: theme.palette.white
     }
   },
@@ -41,10 +43,10 @@ function TabPanel(props) {
 
   return (
     <div
-      role="tabpanel"
+      aria-labelledby={`nav-tab-${index}`}
       hidden={value !== index}
       id={`nav-tabpanel-${index}`}
-      aria-labelledby={`nav-tab-${index}`}
+      role="tabpanel"
       {...other}
     >
       {value === index && (
@@ -62,10 +64,12 @@ TabPanel.propTypes = {
 
 // eslint-disable-next-line react/no-multi-comp
 const SiteManager = (props) => {
-  const { match, history } = props;
+  const { match, 
+  //  history 
+  } = props;
 
   const classes = useStyles();
-  const brandClasses = brandStyles();
+  // const brandClasses = brandStyles();
 
   const [value, setValue] = useState(2);
   const [subTab, setSubTab] = useState('account-manager');
@@ -124,45 +128,16 @@ const SiteManager = (props) => {
     }
   }, [match.params.tab]);
 
-  const handleChange = (event, newValue) => {
-    switch (newValue) {
-      case 0:
-        history.push('/site-manager/location-manager');
-        break;
-      case 1:
-        history.push('/site-manager/department-manager');
-        break;
-      case 2:
-        history.push('/site-manager/population-manager');
-        break;
-      default:
-        break;
-    }
-  };
-
+  
   return (
     <div className={classes.root}>
-      <AppBar
-        position="static"
-        className={classes.appBar}
+      
+      <TabPanel
+        index={0}
+        value={value}
       >
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          classes={{ indicator: brandClasses.tabsIndicator }}
-          variant="scrollable"
-          scrollButtons="auto"
-        >
-          <Tab label="SITES" classes={{ root: clsx(brandClasses.tabsWrapper, brandClasses.tabsSelected) }} />
-          <Tab label="DEPARTMENTS" classes={{ root: clsx(brandClasses.tabsWrapper, brandClasses.tabsSelected) }} />
-          <Tab label="POPULATIONS" classes={{ root: brandClasses.tabsSelected }} />
-          {/* to avoid react warng:  unmounted component && API's calling on first step */}
-          <Tab label="" style={{ display: 'none' }} />
-        </Tabs>
-      </AppBar>
-      <TabPanel value={value} index={0}>
         {subTab === 'location-manager' &&
-          <LocationManager />
+          <ClientManager />
         }
         {subTab === 'add-location' &&
           <AddLocation />
@@ -171,7 +146,10 @@ const SiteManager = (props) => {
           <LocationDetailsNew />
         }
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel
+        index={1}
+        value={value}
+      >
         {subTab === 'department-manager' &&
           <DepartmentManager />
         }
@@ -185,7 +163,10 @@ const SiteManager = (props) => {
           <DepartmentStaff />
         }
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel
+        index={2}
+        value={value}
+      >
         {subTab === 'population-manager' &&
           <PopulationManager />
         }

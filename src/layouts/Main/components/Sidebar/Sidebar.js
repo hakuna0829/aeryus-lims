@@ -12,11 +12,11 @@ import { Profile } from '../Topbar/components';
 
 const useStyles = makeStyles(theme => ({
   drawer: {
-    backgroundColor: theme.palette.sideMenuBgColor,
+    backgroundColor: theme.palette.brand,
     width: theme.palette.drawerWidth,
   },
   toolbar: {
-    backgroundColor: theme.palette.sideMenuBgColor,
+    backgroundColor: theme.palette.brand,
   },
   drawerOpen: {
     width: theme.palette.drawerWidth,

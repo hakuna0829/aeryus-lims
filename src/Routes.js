@@ -33,7 +33,7 @@ import ResetPassword from 'views/ForgotPassword/ResetPassword';
 // import TestdAppointmentCalendar from 'views/TestdAppointmentCalendar';
 // import RapidPass from 'views/RapidPass';
 import Alerts from 'views/Alerts';
-import AddSignature from 'views/SiteManager/LocationManager/AddSignature';
+import AddSignature from 'views/SiteManager/ClientManager/AddSignature';
 
 const Routes = () => {
   return (

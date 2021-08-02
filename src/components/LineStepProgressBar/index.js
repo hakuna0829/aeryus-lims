@@ -53,10 +53,10 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.brandLightGray
   },
   progressItemActive: {
-    backgroundColor: theme.palette.brand
+    backgroundColor: theme.palette.brandGreen
   },
   progressItemPass: {
-    backgroundColor: theme.palette.brandDark
+    backgroundColor: theme.palette.brandGreen
   },
   mark: {
     marginBottom: '1em',
@@ -84,19 +84,19 @@ const useStyles = makeStyles(theme => ({
     }
   },
   activeMark: {
-    color: theme.palette.brand,
+    color: theme.palette.brandGreen,
     '&:before': {
       position: 'absolute',
       top: 4,
       left: 0,
       width: 0,
       height: 0,
-      border: `solid 7px ${theme.palette.brand}`,
+      border: `solid 7px ${theme.palette.brandGreen}`,
       content: "' '",
       marginTop: '0px',
       display: 'block',
       borderRadius: '.8em',
-      background: theme.palette.brand
+      background: theme.palette.brandGreen
     },
     '&:after': {
       top: '8px',
@@ -112,14 +112,14 @@ const useStyles = makeStyles(theme => ({
     }
   },
   passMark: {
-    color: theme.palette.brandDark,
+    color: theme.palette.brandGreen,
     '&:before': {
       position: 'absolute',
       top: 0,
       left: 0,
       width: 0,
       height: 0,
-      border: 'solid 7px #0F84A9',
+      border: `solid 7px ${theme.palette.brandGreen}`,
       content: "' '",
       marginTop: '0px',
       display: 'block',

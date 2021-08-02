@@ -59,7 +59,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.brandText
   },
   title: {
-    color: '#0F84A9',
+    color: theme.palette.brand,
     lineHeight: '1.5rem',
     paddingLeft: 16
   },
@@ -88,16 +88,16 @@ const useStyles = makeStyles(theme => ({
   locationGrid: {
     margin: theme.spacing(2),
     padding: 15,
-    border: `1px solid ${theme.palette.brandDark}`,
-    borderRadius: 8,
+    border: `1px solid ${theme.palette.brand}`,
+    borderRadius: 6.75,
     // maxHeight: 260,
     maxWidth: 260,
-    boxShadow: '4px 5px 8px 2px rgba(15,132,169,0.15)',
+    boxShadow: '3.37784px 3.37784px 3.37784px rgba(4, 58, 92, 0.15)',
     position: 'relative'
   },
   locationGridGray: {
     border: `1px solid ${theme.palette.brandGray}`,
-    boxShadow: '4px 4px 8px 2px rgba(15,132,169,0.15)'
+    boxShadow: '3.37784px 3.37784px 3.37784px rgba(4, 58, 92, 0.15)'
   },
   activeLocationIcon: {
     width: 150,
@@ -112,22 +112,24 @@ const useStyles = makeStyles(theme => ({
     height: 150
   },
   activeLocationText: {
-    color: theme.palette.brandDark,
-    stroke: theme.palette.brandDark,
+    color: theme.palette.brand,
+    stroke: theme.palette.brand,
     textAlign: 'center',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    width: '100%'
+    width: '100%',
+    marginTop:12
   },
   inActiveLocationText: {
     color: theme.palette.brandGray,
-    stroke: theme.palette.brandGray,
+    stroke: theme.palette.brand,
     textAlign: 'center',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    width: '100%'
+    width: '100%',
+    marginTop:12
   },
   activateButton: {
     margin: '10px auto 5px',
@@ -146,8 +148,8 @@ const useStyles = makeStyles(theme => ({
     textTransform: 'none'
   },
   viewLink: {
-    color: theme.palette.brandDark,
-    fontSize: 18,
+    color: theme.palette.brand,
+    fontSize: 16,
     textDecoration: 'underline',
     textTransform: 'capitalize',
     '&:hover': {
@@ -155,7 +157,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   colorGray: {
-    color: '#9B9B9B !important' // remove important
+    color: `${theme.palette.brandGray} !important`// remove important
   },
   iconButton: {
     position: 'absolute',
@@ -175,11 +177,20 @@ const useStyles = makeStyles(theme => ({
     padding: 10,
     position: 'relative',
     marginBottom: 24
+  },
+  gridMenuText:{
+    color:theme.palette.brand
+  },
+  popOver:{
+    border: '0.5px solid #043A5C',    
+    boxSizing: 'border-box',
+    boxShadow: '4px 4px 4px rgba(4, 58, 92, 0.15)',
+    borderRadius: 8
   }
 }));
 
-const LocationManager = props => {
-  const { locations, getLocations1, updateLocation1, clearLocations } = props;
+const ClientManager = props => {
+  const { locations, getLocations1 } = props;
 
   const classes = useStyles();
   const brandClasses = brandStyles();
@@ -210,27 +221,12 @@ const LocationManager = props => {
     setEmptyCardCount(tempEmptyCardCounts);
   }, [width, locations, mobileScreen])
 
-  // useEffect(() => {
-  //   const perRow = mobileScreen ? parseInt( ( width - 16*3 ) / (260 + 16*2) ) : parseInt( (width - 260 - 16*3) / ( 260 + 16*2 )  );
-  //   console.log('perRow count ', perRow);
-  //   const tempEmptyCardCounts = locations ? perRow - locations.length % perRow : 0;
-  //   console.log('emptyCardCounts count ', tempEmptyCardCounts);
-  //   console.log('breakPoint', mobileScreen, xLargeScreen);
-  //   setEmptyCardCount(tempEmptyCardCounts);
-  // },[])
-
-  // const emptyCard = () => {
-
-  // }
-
-  // emptyCard()
-
-  const handleStatusUpdate = async (id, active) => {
-    let res = await updateLocation1(id, { active });
-    if (res.success) {
-      await clearLocations();
-    }
-  };
+  // const handleStatusUpdate = async (id, active) => {
+  //   let res = await updateLocation1(id, { active });
+  //   if (res.success) {
+  //     await clearLocations();
+  //   }
+  // };
 
   const handleClose = () => {
     // e.preventDefault();
@@ -270,43 +266,33 @@ const LocationManager = props => {
         <div className={classes.subHeader}>
           <img
             alt=""
-            src="/images/svg/building_icon.svg"
+            src="/images/svg/status/users_icon.svg"
           />
           &ensp;
-          {/* <Typography variant="h2" className={brandClasses.headerTitle}>
-            Site Manager |
-            </Typography> */}
           <Typography
             className={classes.headerSubTitle}
             variant="h4"
           >
-            LOCATION MANAGER
+            CLIENT MANAGER
           </Typography>
-          {/* <sup>
-            <Tooltip title="LOCATION MANAGER" placement="right-start">
-              <HelpIcon />
-            </Tooltip>
-          </sup> */}
+         
         </div>
-        {/* <DateRange
-          editableDateInputs
-          moveRangeOnFirstSelection={false}
-          onChange={item => setState([item.selection])}
-          ranges={state}
-        /> */}
-        <TextButton category="Icon" to="/site-manager/add-location" component={Link}><AddIcon />ADD LOCATION</TextButton>
+        
+        
       </div>
 
       <div className={classes.container}>
-        <Typography
-          className={classes.title}
-          variant="h5"
-        >
-          Once you add a new location, you can not delete it. However, you can
-          deactivate it at any <br /> time. Inactive locations will still be
-          visible. Gray indicates an inactive location and blue <br /> indicates
-          an active location.
-        </Typography>
+        <Box display="flex" justifyContent="space-between" style={{paddingRight:'16px'}}>
+          <Typography
+            className={classes.title}
+            variant="h5"
+          >
+            Once you add a new client, you can not delete it. However, you can deactivate it at any time. <br />
+            Inactive locations will still be visible. Gray indicates an inactive location and blue indicates an active location.
+          </Typography>
+          <TextButton category="Icon" to="/site-manager/add-location" component={Link}><AddIcon />ADD Client</TextButton>
+        </Box>
+        
         <Grid container>
           {!locations ? (
             <CircularProgress className={brandClasses.fetchProgressSpinner} />
@@ -360,56 +346,13 @@ const LocationManager = props => {
                     }
                     variant="h3"
                   >
-                    {location.name}
+                    Client
+                    {/* {location.name}
                     {location.client_id.name &&
-                      `  –  (${location.client_id.name})`}
+                      `  –  (${location.client_id.name})`} */}
                   </Typography>
-                  {/*<Grid
-                    alignItems="center"
-                    container
-                    direction="row"
-                    justify="space-between"
-                  >
-                     <Button
-                      className={classes.activateButton}
-                      disabled={location.active}
-                      onClick={() => handleStatusUpdate(location._id, true)}
-                      variant="outlined"
-                    >
-                      Activate
-                    </Button> 
-                    <Button
-                      className={classes.deactivateButton}
-                      disabled={!location.active}
-                      onClick={() => handleStatusUpdate(location._id, false)}
-                      variant="outlined"
-                    >
-                      Deactivate
-                    </Button>
-                    
-                  </Grid>*/}
-                  <Box display="flex" justifyContent="space-between" width="100%" marginTop="8px">
-                    <TextButton 
-                      disabled={location.active}
-                      isActivated
-                      onClick={() => handleStatusUpdate(location._id, true)}
-                      size="small"
-                      category="Outlined"
-                      
-                    >
-                      Activate
-                    </TextButton>
-                    <TextButton 
-                      disabled={!location.active}
-                      isActivated={false}
-                      onClick={() => handleStatusUpdate(location._id, false)}
-                      size="small"
-                      category="Outlined"
-                      
-                    >
-                      Deactivate
-                    </TextButton>
-                  </Box>
+                 
+                  
                   <Button
                     className={clsx(
                       classes.viewLink,
@@ -418,7 +361,7 @@ const LocationManager = props => {
                     component={Link}
                     to={`/site-manager/location-details?location_id=${location._id}`}
                   >
-                    {'View Details'}
+                    View History
                   </Button>
 
                   <IconButton
@@ -426,7 +369,11 @@ const LocationManager = props => {
                     aria-haspopup="true"
                     aria-label="more"
                     // onClick={handleClick}
-                    className={classes.iconButton}
+                    // className={classes.iconButton}
+                    className={clsx(
+                      classes.iconButton,
+                      !location.active && classes.colorGray
+                    )}
                     onClick={handleClick(location._id)}
                   >
                     <MoreVertIcon />
@@ -436,7 +383,11 @@ const LocationManager = props => {
                     PaperProps={{
                       style: {
                         maxHeight: ITEM_HEIGHT * 4.5,
-                        width: '20ch'
+                        width: '20ch',
+                        border: '0.5px solid #043A5C',    
+                        boxSizing: 'border-box',
+                        boxShadow: '4px 4px 4px rgba(4, 58, 92, 0.15)',
+                        borderRadius: 8
                       }
                     }}
                     anchorEl={anchorEl}
@@ -445,14 +396,16 @@ const LocationManager = props => {
                     key={location._id}
                     onClick={() => setAnchorEl(null)}
                     open={location._id === selectedId && open}
+                    className={classes.popOver}
                   >
                     <MenuItem
                       // selected={option === 'Pyxis'}
+                      className={classes.gridMenuText}
                       onClick={e => handleMenuItem(e, location._id)}
                     >
                       Duplicate
                     </MenuItem>
-                    <MenuItem>Delete</MenuItem>
+                    <MenuItem className={classes.gridMenuText}>Delete</MenuItem>
                   </Menu>
                 </Grid>
               ))}
@@ -495,7 +448,7 @@ const mapStateToProps = state => ({
   locations: state.data.locations
 });
 
-LocationManager.propTypes = {
+ClientManager.propTypes = {
   getLocations1: PropTypes.func.isRequired,
   updateLocation1: PropTypes.func.isRequired,
   clearLocations: PropTypes.func.isRequired
@@ -505,4 +458,4 @@ export default connect(mapStateToProps, {
   getLocations1,
   updateLocation1,
   clearLocations
-})(LocationManager);
+})(ClientManager);

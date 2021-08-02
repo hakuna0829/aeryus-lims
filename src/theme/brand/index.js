@@ -78,24 +78,24 @@ const brandStyles = makeStyles(theme => ({
         padding: 12,
         paddingRight: 30,
         fontSize: 14,
-        color: theme.palette.blueDark,
+        color: theme.palette.brand,
         backgroundColor: 'white',
         fontWeight: 500
       },
       '& fieldset': {
-        borderColor: theme.palette.brandDark,
+        borderColor: theme.palette.brand,
         borderRadius: 10,
         borderWidth: 1,
       },
       '&:hover fieldset': {
-        borderColor: theme.palette.brand,
+        borderColor: theme.palette.brandDark,
       },
       '&.Mui-focused fieldset': {
         borderColor: theme.palette.brandDark,
       },
     },
     '& .MuiInputLabel-shrink': {
-      color: theme.palette.brandDark,
+      color: theme.palette.brand,
       // fontWeight: 600,
       // fontSize: theme.spacing(2)
     },
@@ -558,8 +558,8 @@ const brandStyles = makeStyles(theme => ({
     paddingTop: 10
   },
   uploadContanier: {
-    border: `solid 1px`,
-    borderColor: theme.palette.brandDark,
+    border: 'solid 1px',
+    borderColor: theme.palette.brand,
     borderRadius: 10,
     padding: 10,
     position: 'relative',
@@ -567,6 +567,7 @@ const brandStyles = makeStyles(theme => ({
   },
   uploadImageContainer: {
     display: 'flex',
+    color:theme.palette.brand,
     justifyContent: 'flex-end',
     '& img': {
       marginRight: 10,
@@ -574,7 +575,7 @@ const brandStyles = makeStyles(theme => ({
     }
   },
   uploadTitle: {
-    color: '#0F84A9',
+    color: theme.palette.brand,
     fontSize: 10,
     position: 'absolute',
     top: -10,
@@ -585,6 +586,9 @@ const brandStyles = makeStyles(theme => ({
     color: '#9B9B9B',
     fontSize: 14,
     padding: '4px 10px'
+  },
+  uploadPhotoLabel:{
+    color: theme.palette.brand,
   },
   uploadInput: {
     display: 'none',

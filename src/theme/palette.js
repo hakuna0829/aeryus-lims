@@ -6,12 +6,12 @@ const black = '#000000';
 export default {
   black,
   white,
-  brand: '#3ECCCD',
+  brand: '#043A5C',
   brandDark: '#0F84A9',
   brandLight: '#87C1D4',
   blueDark: '#043B5D',
   brandDisableGray: '#788081',
-  brandGray: '#9B9B9B',
+  brandGray: '#CECECE',
   brandLightGray: '#D8D8D8',
   brandDeepGray: '#546466',
   brandGreen: '#00D7A2',
@@ -66,7 +66,7 @@ export default {
     light: colors.red[400]
   },
   text: {
-    primary: '#0F84A9',
+    primary: '#043A5C',
     secondary: colors.blueGrey[600],
     link: colors.blue[600]
   },
