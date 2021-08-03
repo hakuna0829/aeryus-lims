@@ -164,40 +164,6 @@ const useStyles = makeStyles(theme => ({
     background: '#fff',
     
   },
-  settingIconBox: {
-    width: '42px',
-    height: '40px',
-    display: 'block',
-
-    fontFamily: 'verdana',
-    fontSize: '22px',
-    padding: 0,
-    margin: '0px 15px 0 0',
-    border: 'solid 1px',
-    borderColor: theme.palette.brandDark,
-    borderRadius: '3px',
-    boxShadow: '2.34545px 3.12727px 3.90909px rgba(4, 59, 93, 0.15)',
-    outline: 0,
-    lineHeight: '50px',
-    textAlign: 'center',
-    cursor: 'pointer',
-    color: '#FFFFFF',
-    background: '#fff',
-    backgroundImage: 'url("/images/svg/filter_inactive.svg")',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    '&:hover':{
-      background: theme.palette.brandDark,
-      backgroundImage: 'url("/images/svg/filter_active.svg")',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
-    }
-  },
-  settingIcon: {
-    fontSize: '2rem',
-    marginTop: 2,
-    color: 'rgba(155,155,155,0.5)',
-  },
   cellDiv: {
     textOverflow: 'ellipsis',
     overflow: 'hidden',
@@ -1193,7 +1159,7 @@ const UserList = (props) => {
       >
         <Grid item>
           <div className={classes.header2}>
-            <div className={classes.settingIconBox}>
+            <div className={brandClasses.settingIconBox}>
               {/* <img
                 src="/images/svg/Filter.svg"
                 alt=""

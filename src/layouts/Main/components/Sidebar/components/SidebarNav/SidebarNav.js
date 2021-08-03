@@ -48,6 +48,7 @@ const SidebarNav = props => {
       )
     );
   }
+  console.log('pages', pages);
 
   return (
     <List

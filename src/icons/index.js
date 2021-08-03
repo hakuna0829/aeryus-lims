@@ -37,3 +37,4 @@ export { default as Document } from './Document';
 export { default as RapidPassCard } from './RapidPassCard';
 
 export { default as Calendar} from './Calendar';
+export { default as Order } from './Order';

@@ -9,18 +9,20 @@ export default {
   brand: '#043A5C',
   brandDark: '#0F84A9',
   brandLight: '#87C1D4',
+  brandBlue: '#016A73',
   blueDark: '#043B5D',
   brandDisableGray: '#788081',
   brandGray: '#CECECE',
   brandLightGray: '#D8D8D8',
   brandDeepGray: '#546466',
+  brandDarkGray: '#9B9B9B',
   brandGreen: '#00D7A2',
   brandRed: '#DD2525',
   brandText: '#043B5D',
   brandOrange: '#FF931E',
   brandLightBlue: '#D9EEF4',
   brandPink: '#DE50A4',
-  sideMenuBgColor: '#DBECF2',
+  sideMenuBgColor: '#5E89A2',
   sideMenuItemActiveColor: '#4B738B',
   sideMenuItemInActiveColor: '#DAECF2',
   sideMenuActiveColor: '#FFFFFF',
@@ -32,8 +34,8 @@ export default {
   primary: {
     contrastText: white,
     dark: '#043B5D',
-    main: '#0F84A9',
-    light: '#3ECCCD'
+    main: '#043A5C',
+    light: '#5E89A2'
   },
   secondary: {
     contrastText: white,

@@ -58,7 +58,7 @@ const SearchBar = props => {
                 <IconButton
                   type="submit"
                 >
-                  <SearchIcon />
+                  <SearchIcon color="primary"/>
                 </IconButton>
               </InputAdornment>
             )

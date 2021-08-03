@@ -34,6 +34,7 @@ import ResetPassword from 'views/ForgotPassword/ResetPassword';
 // import RapidPass from 'views/RapidPass';
 import Alerts from 'views/Alerts';
 import AddSignature from 'views/SiteManager/ClientManager/AddSignature';
+import OrderManager from 'views/OrderManager';
 
 const Routes = () => {
   return (
@@ -221,6 +222,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/results-manager/:tab"
+      />
+      <PrivateRouteWithLayout
+        component={OrderManager}
+        exact
+        layout={MainLayout}
+        path="/order-manager/:tab"
       />
       <PrivateRouteWithLayout
         component={AppointmentManager}

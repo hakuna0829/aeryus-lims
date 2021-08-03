@@ -69,7 +69,7 @@ const Sidebar = props => {
   const classes = useStyles();
 
   const [authPages, setAuthPages] = useState([]);
-
+  console.log('modules data', modules)
   useEffect(() => {
     // auth routes
     setAuthPages(

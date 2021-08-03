@@ -114,10 +114,11 @@ const brandStyles = makeStyles(theme => ({
     }
   },
   selectPlaceholder: {
-    color: theme.palette.brandGray,
+    color: theme.palette.brandDarkGray,
+    lineHeight: '18px'
   },
   selectPlaceholderGray: {
-    color: theme.palette.brandGray,
+    color: theme.palette.brandDarkGray,
   },
   selected: {
     fontWeight: 500,
@@ -148,18 +149,18 @@ const brandStyles = makeStyles(theme => ({
         paddingTop: 12,
         paddingBottom: 12,
         fontSize: 14,
-        color: theme.palette.brandDark,
+        color: theme.palette.brand,
         backgroundColor: 'white',
       },
       '& fieldset': {
-        borderColor: theme.palette.brandDark,
+        borderColor: theme.palette.brand,
         borderWidth: 1,
       },
       '&:hover fieldset': {
-        borderColor: theme.palette.brandDark,
+        borderColor: theme.palette.brand,
       },
       '&.Mui-focused fieldset': {
-        borderColor: theme.palette.brandDark,
+        borderColor: theme.palette.brand,
       },
     },
     '& .MuiInputAdornment-positionStart': {
@@ -234,7 +235,7 @@ const brandStyles = makeStyles(theme => ({
     }
   },
   tableRow2: {
-    backgroundColor: theme.palette.sideMenuBgColor,
+    backgroundColor: `${theme.palette.sideMenuBgColor}20`,
   },
   progressSpinner: {
     color: theme.palette.brandDark,
@@ -252,6 +253,7 @@ const brandStyles = makeStyles(theme => ({
   },
   tableHead: {
     padding: '8px 16px !important',
+    color: theme.palette.brand,
     backgroundColor: `${theme.palette.white} !important`,
     whiteSpace: 'nowrap',
     [theme.breakpoints.down('lg')]: {
@@ -280,24 +282,37 @@ const brandStyles = makeStyles(theme => ({
     },
   },
   settingIconBox: {
-    width: '40px',
+    width: '42px',
     height: '40px',
     display: 'block',
+
     fontFamily: 'verdana',
     fontSize: '22px',
     padding: 0,
-    margin: 0,
-    border: 'solid 1px rgba(155,155,155,0.5)',
+    margin: '0px 15px 0 0',
+    border: 'solid 1px',
+    borderColor: theme.palette.brand,
+    borderRadius: '3px',
+    boxShadow: '2.34545px 3.12727px 3.90909px rgba(4, 59, 93, 0.15)',
     outline: 0,
     lineHeight: '50px',
     textAlign: 'center',
     cursor: 'pointer',
-    color: theme.palette.white,
-    background: theme.palette.white,
+    color: '#FFFFFF',
+    background: '#fff',
+    backgroundImage: 'url("/images/svg/filter_inactive.svg")',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    '&:hover':{
+      background: theme.palette.brand,
+      backgroundImage: 'url("/images/svg/filter_active.svg")',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+    }
   },
   settingIcon: {
     fontSize: '2rem',
-    marginTop: 4,
+    marginTop: 2,
     color: 'rgba(155,155,155,0.5)',
   },
   tableSortLabel: {

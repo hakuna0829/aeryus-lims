@@ -95,7 +95,8 @@ const useStyles = makeStyles(theme => ({
     zIndex: 9
   },
   cellDiv: {
-    padding: '3px 8px'
+    padding: '3px 8px',
+    color: theme.palette.brand
   }
 }));
 
