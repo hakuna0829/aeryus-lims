@@ -40,11 +40,25 @@ export default [
   },
   {
     title: 'Order Manager',
-    href: '/order-manager/All',
+    // href: '/order-manager/All',
     icon: <Order />,
-    module_name: 'UserManager',
+    module_name: 'OrderManager',
     show: true,
     expanded: false,
+    children: [
+      {
+        title: 'Pending',
+        href: '/order-manager/pending',
+      },
+      {
+        title: 'Accessioned',
+        href: '/order-manager/accessioned',
+      },
+      {
+        title: 'Released',
+        href: '/order-manager/released',
+      },
+    ]
   },
   {
     title: 'Population',

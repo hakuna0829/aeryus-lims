@@ -162,25 +162,20 @@ const OrderManager = props => {
     console.log('Selected tab: ' + tab);
     if (tab) {
       switch (tab) {
-        case 'All':
+        case 'all':
           setValue(0);
           break;
-        case 'Pending':
+        case 'pending':
           setValue(1);
           break;
-        case 'Negative':
+        case 'accessioned':
           setValue(2);
           break;
-        case 'Positive':
+        case 'released':
           setValue(3);
           break;
-        case 'Inconclusive':
-          setValue(4);
-          break;
-        case 'Vaccine':
-          setValue(5);
-          break;
         default:
+          setValue(0);
           break;
       }
     }
@@ -190,24 +185,19 @@ const OrderManager = props => {
     // setValue(newValue);
     switch (newValue) {
       case 0:
-        history.push('/order-manager/All');
+        history.push('/order-manager/all');
         break;
       case 1:
-        history.push('/order-manager/Pending');
+        history.push('/order-manager/pending');
         break;
       case 2:
-        history.push('/order-manager/Negative');
+        history.push('/order-manager/accessioned');
         break;
       case 3:
-        history.push('/order-manager/Positive');
-        break;
-      case 4:
-        history.push('/order-manager/Inconclusive');
-        break;
-      case 5:
-        history.push('/order-manager/Vaccine');
+        history.push('/order-manager/released');
         break;
       default:
+        history.push('/order-manager/all');
         break;
     }
   };
@@ -215,16 +205,16 @@ const OrderManager = props => {
   const getResultFromTab = tab => {
     switch (tab) {
       case 0:
-        return 'All';
+        return 'all';
       case 1:
-        return 'Pending';
+        return 'pending';
       case 2:
-        return 'Accessioned';
+        return 'accessioned';
       case 3:
-        return 'Released';
+        return 'released';
       
       default:
-        return 'All';
+        return 'all';
     }
   };
 

@@ -67,23 +67,23 @@ const Sidebar = props => {
   const { open, variant, onClose, className, onCollapse, drawerOpen, modules } = props;
 
   const classes = useStyles();
-
   const [authPages, setAuthPages] = useState([]);
-  console.log('modules data', modules)
+  
   useEffect(() => {
     // auth routes
     setAuthPages(
       pages.filter(p => p.show && modules.some(m => {
-        if (p.module_name === 'UserManager') {
-          if (m.name === 'UserManager')
-            return true;
-          else if (modules.filter(m => m.name === 'TestTechnician').length)
-            return true;
-          else
-            return false;
-        } else {
-          return p.module_name === m.name;
-        }
+        return true
+        // if (p.module_name === 'UserManager') {
+        //   if (m.name === 'UserManager')
+        //     return true;
+        //   else if (modules.filter(m => m.name === 'TestTechnician').length)
+        //     return true;
+        //   else
+        //     return false;
+        // } else {
+        //   return p.module_name === m.name;
+        // }
       }))
     );
   }, [modules]);

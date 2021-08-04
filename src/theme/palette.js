@@ -22,6 +22,7 @@ export default {
   brandOrange: '#FF931E',
   brandLightBlue: '#D9EEF4',
   brandPink: '#DE50A4',
+  brandYellow: '#FFBC35',
   sideMenuBgColor: '#5E89A2',
   sideMenuItemActiveColor: '#4B738B',
   sideMenuItemInActiveColor: '#DAECF2',

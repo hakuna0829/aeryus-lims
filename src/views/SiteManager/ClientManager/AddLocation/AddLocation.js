@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
@@ -6,8 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import {
-  Box, Typography, Button, CircularProgress, Grid, TextField, Select,
-  MenuItem, Checkbox, FormControlLabel, IconButton, FilledInput, Link as RouterLink
+  Box, Typography, Button, CircularProgress, Grid, TextField, Checkbox, FormControlLabel, Link as RouterLink
 }
   from '@material-ui/core';
 import brandStyles from 'theme/brand';
@@ -15,25 +14,18 @@ import { handleImage } from 'helpers';
 import Alert from '@material-ui/lab/Alert';
 import DialogAlert from 'components/DialogAlert';
 import DialogAlertOperationConfirmation from 'components/DialogAlert';
+import IOSSwitch from 'components/IOSSwitch';
 // import SignaturePad from 'react-signature-canvas';
-import { addLocation, uploadImage, apiUrl, 
-  // getInventoryAvailable 
-} from 'actions/api';
+import { addLocation, uploadImage, apiUrl } from 'actions/api';
 import { clearLocations } from 'actions/clear';
 import AddIcon from '@material-ui/icons/Add';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
-import moment from 'moment';
-import MomentUtils from '@date-io/moment';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-} from '@material-ui/pickers';
+// import moment from 'moment';
 import * as appConstants from 'constants/appConstants';
-import { Users, Edit, Delete } from 'icons';
+import { Users } from 'icons';
 // import CheckButton from 'components/CheckButton';
 // import ZipCodeInput from 'components/ZipCodeInput';
 import NpiInput from 'components/NpiInput';
@@ -42,8 +34,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import LineStepProgressBar from 'components/LineStepProgressBar';
 // import Autocomplete from '@material-ui/lab/Autocomplete';
 import NumberFormat from 'react-number-format';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-
 const useStyles = makeStyles(theme => ({
   text: {
     margin: theme.spacing(1),
@@ -448,181 +438,46 @@ const useStyles = makeStyles(theme => ({
     '& svg': {
       cursor: 'pointer'
     }
+  },
+  interfaceBtnRow:{
+    display:'flex', 
+    justifyContent:'space-around',
+    '& .endpoint.MuiButton-contained': {
+      backgroundColor: theme.palette.brandGreen,
+      color: theme.palette.white
+    },
+    '& .username.MuiButton-contained': {
+      backgroundColor: theme.palette.brandYellow,
+      color: theme.palette.white
+    },
+    '& .password.MuiButton-contained': {
+      backgroundColor: theme.palette.brandBlue,
+      color: theme.palette.white
+    },
+    
   }
 }));
 
-const startTime = moment('2020-02-20 09:00');
-const endTime = moment('2020-02-20 10:00');
+// const startTime = moment('2020-02-20 09:00');
+// const endTime = moment('2020-02-20 10:00');
 
 const OperationValuesInit = [
   {
-    day_name: 'Monday',
-    active: false,
-    displayStartTime: startTime,
-    displayEndTime: endTime,
-    start_time: startTime.format('HH:mm'),
-    end_time: endTime.format('HH:mm'),
-    day_number: 1,
-    edit: false,
-    time_slots: [
-      {
-        displayStartTime: startTime,
-        displayEndTime: endTime,
-        edit: false,
-        checked: false,
-        start_time: startTime.format('HH:mm'),
-        end_time: endTime.format('HH:mm'),
-        vaccine: { checked: false, value: 0 },
-        pcr: { checked: false, value: 0 },
-        antigen: { checked: false, value: 0 },
-        time_slot_difference: 10,
-      }
-    ]
+    name: 'Interface 1',
+    active: true,
   },
   {
-    day_name: 'Tuesday',
+    name: 'Interface 2',
     active: false,
-    displayStartTime: startTime,
-    displayEndTime: endTime,
-    start_time: startTime.format('HH:mm'),
-    end_time: endTime.format('HH:mm'),
-    day_number: 2,
-    edit: false,
-    time_slots: [
-      {
-        displayStartTime: startTime,
-        displayEndTime: endTime,
-        edit: false,
-        checked: false,
-        start_time: startTime.format('HH:mm'),
-        end_time: endTime.format('HH:mm'),
-        vaccine: { checked: false, value: 0 },
-        pcr: { checked: false, value: 0 },
-        antigen: { checked: false, value: 0 },
-        time_slot_difference: 10,
-      }
-    ]
   },
   {
-    day_name: 'Wednesday',
+    name: 'Interface 3',
     active: false,
-    displayStartTime: startTime,
-    displayEndTime: endTime,
-    start_time: startTime.format('HH:mm'),
-    end_time: endTime.format('HH:mm'),
-    day_number: 3,
-    edit: false,
-    time_slots: [
-      {
-        displayStartTime: startTime,
-        displayEndTime: endTime,
-        edit: false,
-        checked: false,
-        start_time: startTime.format('HH:mm'),
-        end_time: endTime.format('HH:mm'),
-        vaccine: { checked: false, value: 0 },
-        pcr: { checked: false, value: 0 },
-        antigen: { checked: false, value: 0 },
-        time_slot_difference: 10,
-      }
-    ]
   },
   {
-    day_name: 'Thursday',
+    name: 'Interface 4',
     active: false,
-    displayStartTime: startTime,
-    displayEndTime: endTime,
-    start_time: startTime.format('HH:mm'),
-    end_time: endTime.format('HH:mm'),
-    day_number: 4,
-    edit: false,
-    time_slots: [
-      {
-        displayStartTime: startTime,
-        displayEndTime: endTime,
-        edit: false,
-        checked: false,
-        start_time: startTime.format('HH:mm'),
-        end_time: endTime.format('HH:mm'),
-        vaccine: { checked: false, value: 0 },
-        pcr: { checked: false, value: 0 },
-        antigen: { checked: false, value: 0 },
-        time_slot_difference: 10,
-      }
-    ]
-  },
-  {
-    day_name: 'Friday',
-    active: false,
-    displayStartTime: startTime,
-    displayEndTime: endTime,
-    start_time: startTime.format('HH:mm'),
-    end_time: endTime.format('HH:mm'),
-    day_number: 5,
-    edit: false,
-    time_slots: [
-      {
-        displayStartTime: startTime,
-        displayEndTime: endTime,
-        edit: false,
-        checked: false,
-        start_time: startTime.format('HH:mm'),
-        end_time: endTime.format('HH:mm'),
-        vaccine: { checked: false, value: 0 },
-        pcr: { checked: false, value: 0 },
-        antigen: { checked: false, value: 0 },
-        time_slot_difference: 10,
-      }
-    ]
-  },
-  {
-    day_name: 'Saturday',
-    active: false,
-    displayStartTime: startTime,
-    displayEndTime: endTime,
-    start_time: startTime.format('HH:mm'),
-    end_time: endTime.format('HH:mm'),
-    day_number: 6,
-    edit: false,
-    time_slots: [
-      {
-        displayStartTime: startTime,
-        displayEndTime: endTime,
-        edit: false,
-        checked: false,
-        start_time: startTime.format('HH:mm'),
-        end_time: endTime.format('HH:mm'),
-        vaccine: { checked: false, value: 0 },
-        pcr: { checked: false, value: 0 },
-        antigen: { checked: false, value: 0 },
-        time_slot_difference: 10,
-      }
-    ]
-  },
-  {
-    day_name: 'Sunday',
-    active: false,
-    displayStartTime: startTime,
-    displayEndTime: endTime,
-    start_time: startTime.format('HH:mm'),
-    end_time: endTime.format('HH:mm'),
-    day_number: 0,
-    edit: false,
-    time_slots: [
-      {
-        displayStartTime: startTime,
-        displayEndTime: endTime,
-        edit: false,
-        checked: false,
-        start_time: startTime.format('HH:mm'),
-        end_time: endTime.format('HH:mm'),
-        vaccine: { checked: false, value: 0 },
-        pcr: { checked: false, value: 0 },
-        antigen: { checked: false, value: 0 },
-        time_slot_difference: 10,
-      }
-    ]
-  },
+  }
 ];
 
 const OperationErrorsInit = [...Array(7)].map((e) => (
@@ -652,10 +507,10 @@ const AddLocation = (props) => {
 
   const [step, setStep] = useState(3);
   const [eocView, setEocView] = useState(false);
-  const [timeSlotError, setTimeSlotError] = useState(null);
+  const [timeSlotError] = useState(null);
   // const [inventory, setInventory] = useState([]);
   const [selectedInventory] = useState([]);
-  const [inventoryError, setInventoryError] = useState(null);
+  const [inventoryError] = useState(null);
 
   const [displayError, setDisplayError] = useState(null);
   const [displaySuccess, setDisplaySuccess] = useState(null);
@@ -668,104 +523,8 @@ const AddLocation = (props) => {
   const [formState, setFormState] = useState({ provider: { send_signature_request_email: true, send_signature_request_sms: false } });
 
   const [operationState, setOperationState] = useState([...OperationValuesInit]);
-  const [operationErrorsState, setOperationErrorsState] = useState(JSON.parse(JSON.stringify(OperationErrorsInit)));
-  const [inventoryAvailableCount, setInventoryAvailableCount] = useState({ vaccine: 0, antigen: 0, pcr: 0 });
-  const [tempInventoryCount, setTempInventoryCount] = useState({ vaccine: 0, pcr: 0, antigen: 0 });
-  const [recalculate, setRecalculate] = useState(0);
-
-  useEffect(() => {
-    // (async () => {
-    //   let res = await getInventoryAvailable();
-    //   if (res.success) {
-    //     setInventory(res.data);
-    //   }
-    // })();
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    // calculation
-    let vaccineInputCount = 0, pcrInputCount = 0, antigenInputCount = 0;
-    // JSON parse stringify - to create a copy of object
-    let operationErrors = JSON.parse(JSON.stringify(OperationErrorsInit));
-    setOperationErrorsState(operationErrors);
-    operationState.forEach((o, di) => {
-      // get sum of types
-      vaccineInputCount += o.time_slots.filter(ts => ts.checked && ts.vaccine.checked).reduce((sum, ts) => sum + ts.vaccine.value, 0);
-      pcrInputCount += o.time_slots.filter(ts => ts.checked && ts.pcr.checked).reduce((sum, ts) => sum + ts.pcr.value, 0);
-      antigenInputCount += o.time_slots.filter(ts => ts.checked && ts.antigen.checked).reduce((sum, ts) => sum + ts.antigen.value, 0);
-      // check for checked
-      o.time_slots.forEach((ts, cei) => {
-        if (ts.checked && (!ts.antigen.checked && !ts.pcr.checked && !ts.vaccine.checked)) {
-          operationErrors[di].error = true;
-          operationErrors[di].timeSlotError[cei].vaccine = true;
-          operationErrors[di].timeSlotError[cei].pcr = true;
-          operationErrors[di].timeSlotError[cei].antigen = true;
-          operationErrors[di].timeSlotError[cei].error = 'You must check one and input number of slots';
-          setOperationErrorsState([...operationErrors]);
-        }
-      });
-      // check for value
-      o.time_slots.forEach((ts, vei) => {
-        if (ts.checked && ((ts.vaccine.checked && ts.vaccine.value === 0) || (ts.pcr.checked && ts.pcr.value === 0) || (ts.antigen.checked && ts.antigen.value === 0))) {
-          operationErrors[di].error = true;
-          operationErrors[di].timeSlotError[vei].error = 'Please enter value.';
-          // check vaccine 
-          if (o.time_slots[vei].vaccine.checked && o.time_slots[vei].vaccine.value === 0)
-            operationErrors[di].timeSlotError[vei].vaccine = true;
-          // check pcr 
-          if (o.time_slots[vei].pcr.checked && o.time_slots[vei].pcr.value === 0)
-            operationErrors[di].timeSlotError[vei].pcr = true;
-          // check antigen 
-          if (o.time_slots[vei].antigen.checked && o.time_slots[vei].antigen.value === 0)
-            operationErrors[di].timeSlotError[vei].antigen = true;
-          setOperationErrorsState([...operationErrors]);
-        }
-      });
-    });
-    // minus from available inventory
-    setInventoryAvailableCount({
-      vaccine: tempInventoryCount.vaccine - vaccineInputCount,
-      pcr: tempInventoryCount.pcr - pcrInputCount,
-      antigen: tempInventoryCount.antigen - antigenInputCount
-    });
-    // eslint-disable-next-line
-  }, [operationState, recalculate]);
-
-  useEffect(() => {
-    if (!selectedInventory.length) {
-      return setInventoryError('Please Select Inventory');
-    }
-    if (inventoryAvailableCount.vaccine < 0) {
-      return setInventoryError('Vaccine insufficient');
-    }
-    if (inventoryAvailableCount.pcr < 0) {
-      return setInventoryError('PCR insufficient');
-    }
-    if (inventoryAvailableCount.antigen < 0) {
-      return setInventoryError('Antigen insufficient');
-    }
-    // if no errors
-    setInventoryError(null);
-    // eslint-disable-next-line
-  }, [inventoryAvailableCount]);
-
-  useEffect(() => {
-    if (selectedInventory.length) {
-      let vaccine = selectedInventory.filter(i => i.item_type === 'Vaccine').reduce((sum, i) => sum + i.remaining_quantity, 0);
-      let pcr = selectedInventory.filter(i => i.item_type === 'PCR' || i.item_type === 'Saliva').reduce((sum, i) => sum + i.remaining_quantity, 0);
-      let antigen = selectedInventory.filter(i => i.item_type === 'Rapid').reduce((sum, i) => sum + i.remaining_quantity, 0);
-      setInventoryAvailableCount({ vaccine, pcr, antigen });
-      setTempInventoryCount({ vaccine, pcr, antigen });
-      setInventoryError(null);
-      setRecalculate(recalculate => recalculate + 1);
-    } else {
-      setInventoryAvailableCount({ vaccine: 0, antigen: 0, pcr: 0 });
-      setTempInventoryCount({ vaccine: 0, antigen: 0, pcr: 0 });
-      setInventoryError('Please Select Inventory');
-    }
-    // eslint-disable-next-line
-  }, [selectedInventory]);
+  const [operationErrorsState] = useState(JSON.parse(JSON.stringify(OperationErrorsInit)));
+ 
 
   const handleChange = e => {
     e.persist();
@@ -794,148 +553,6 @@ const AddLocation = (props) => {
     }
   };
 
-  // const handleInventoryChange = (e, values) => {
-  //   setSelectedInventory(values);
-  // };
-
-  const handleHoursCheckChange = (index, slot_index) => event => {
-    event.persist();
-    let operations = [...operationState];
-    // make time slot checked/unchecked
-    operations[index].time_slots[slot_index].checked = event.target.checked;
-    // to make day as active/inactive
-    let isActiveArray = operations[index].time_slots.filter(e => e.checked === true);
-    operations[index].active = isActiveArray.length ? true : false;
-    setOperationState(operations);
-  };
-
-  const handleTimeSlotEdit = (index, slot_index, value) => {
-    let operations = [...operationState];
-    operations[index].time_slots[slot_index].edit = value;
-    setOperationState(operations);
-  };
-
-  const handleClosedChange = index => event => {
-    event.persist();
-    let operations = [...operationState];
-    operations[index].active = !event.target.checked;
-    setOperationState(operations);
-  };
-
-  const addNewTimeSlot = index => event => {
-    event.preventDefault();
-    let operations = [...operationState];
-    let last_time = operations[index].time_slots.length ? operations[index].time_slots[operations[index].time_slots.length - 1].end_time : '09:00';
-    operations[index].time_slots.push({
-      displayStartTime: moment(last_time, 'HH:mm'),
-      displayEndTime: moment(last_time, 'HH:mm').add(1, 'hours'),
-      start_time: moment(last_time, 'HH:mm').format('HH:mm'),
-      end_time: moment(last_time, 'HH:mm').add(1, 'hours').format('HH:mm'),
-      edit: false,
-      checked: false,
-      vaccine: { checked: false, value: 0 },
-      pcr: { checked: false, value: 0 },
-      antigen: { checked: false, value: 0 },
-      time_slot_difference: 10,
-    });
-    setOperationState(operations);
-    // add for errors
-    let operationErrors = [...operationErrorsState];
-    operationErrors[index].timeSlotError.push({
-      vaccine: false,
-      pcr: false,
-      antigen: false,
-      error: null,
-    });
-    setOperationErrorsState([...operationErrors]);
-    OperationErrorsInit[index].timeSlotError.push({
-      vaccine: false,
-      pcr: false,
-      antigen: false,
-      error: null,
-    });
-  };
-
-  const handleTimeSlotDelete = (index, slot_index) => {
-    let operations = [...operationState];
-    operations[index].time_slots.splice(slot_index, 1);
-    setOperationState(operations);
-    // remove for errors
-    let operationErrors = [...operationErrorsState];
-    operationErrors[index].timeSlotError.splice(slot_index, 1);
-    setOperationErrorsState([...operationErrors]);
-    OperationErrorsInit[index].timeSlotError.splice(slot_index, 1);
-  };
-
-  const handleStartTimeChange = (index, slot_index) => (date) => {
-    setTimeSlotError(null);
-    let checkduplicate = false;
-    let operations = [...operationState];
-    operations[index].time_slots[slot_index].displayStartTime = date;
-    for (let i = 0; i < operations[index].time_slots.length; i++) {
-      if (i !== slot_index) {
-        if (operations[index].time_slots[i].start_time === moment(date).format('HH:mm')) {
-          checkduplicate = true;
-          setTimeSlotError('Start Time already exists');
-          return;
-        } else if (moment(date).format('HH:mm') <= operations[index].time_slots[i].end_time && moment(date).format('HH:mm') >= operations[index].time_slots[i].start_time) {
-          setTimeSlotError('Start Time  is in between selected slots ');
-          return;
-        } else {
-          checkduplicate = false
-        }
-      }
-    }
-    if (!checkduplicate) { // moment(date).toString()
-      operations[index].time_slots[slot_index].start_time = moment(date).format('HH:mm');
-      setOperationState(operations);
-    }
-  };
-
-  const handleEndTimeChange = (index, slot_index) => (date) => {
-    setTimeSlotError(null);
-    let checkduplicate = false
-    let operations = [...operationState];
-    operations[index].time_slots[slot_index].displayEndTime = date; // moment(date).toString()
-    for (let i = 0; i < operations[index].time_slots.length; i++) {
-      if (i !== slot_index) {
-        if (operations[index].time_slots[i].end_time === moment(date).format('HH:mm')) {
-          checkduplicate = true;
-          setTimeSlotError('End Time already exists');
-          return;
-        } else if (moment(date).format('HH:mm') <= operations[index].time_slots[i].end_time && moment(date).format('HH:mm') >= operations[index].time_slots[i].start_time) {
-          setTimeSlotError('Start Time and End Time is in between selected slots ');
-          return;
-        } else {
-          checkduplicate = false
-        }
-      }
-    }
-    if (!checkduplicate) {
-      operations[index].time_slots[slot_index].end_time = moment(date).format('HH:mm');
-      setOperationState(operations);
-    }
-  };
-
-  const handleSlotTypeCheckbox = (index, slot_index, type) => event => {
-    event.persist();
-    let operations = [...operationState];
-    operations[index].time_slots[slot_index][type].checked = event.target.checked;
-    setOperationState(operations);
-  };
-
-  const handleSlotTypeInput = (index, slot_index, type) => event => {
-    event.persist();
-    if (!isNaN(event.target.value)) {
-      let operations = [...operationState];
-      if (!event.target.value) {
-        operations[index].time_slots[slot_index][type].value = 0;
-      } else {
-        operations[index].time_slots[slot_index][type].value = parseInt(event.target.value);
-      }
-      setOperationState(operations);
-    }
-  };
 
   const handlePhotoChange = event => {
     handleImage(event, setDisplayError, setImgState, setImgCompressionLoading);
@@ -964,13 +581,7 @@ const AddLocation = (props) => {
     setDisplaySuccess(null);
   };
 
-  const handleSlotDifferenceChange = (index, slot_index) => event => {
-    event.persist();
-    let operations = [...operationState];
-    operations[index].time_slots[slot_index].time_slot_difference = event.target.value;
-    setOperationState(operations);
-  };
-
+  
   const toggleEocView = () => {
     setEocView(!eocView);
   };
@@ -1069,6 +680,30 @@ const AddLocation = (props) => {
     }
   };
 
+  const handleCheckChange = e => {
+    e.persist();
+    var tempInterfaces = operationState;
+    tempInterfaces.map((inter) => {
+      if(inter.name === e.target.name) 
+        inter.active = !inter.active;
+      return inter;
+    })
+    console.log('tempInterfaces', tempInterfaces)
+    setOperationState(tempInterfaces);
+  };
+
+  // eslint-disable-next-line react/no-multi-comp
+  const InterfaceBtnRow = (props) => {
+
+    return (
+      <div className={classes.interfaceBtnRow} >
+        <Button variant="contained" className={props.active ? 'endpoint' : '' } disabled={!props.active}>End point</Button>
+        <Button variant="contained" className={props.active ? "username" : '' } disabled={!props.active}>User Name</Button>
+        <Button variant="contained" className={props.active ? "password" : '' } disabled={!props.active}>Password</Button>
+      </div>
+    );    
+  }
+
   return (
     <div>
       {/* <form onSubmit={handleSubmit} > */}
@@ -1089,11 +724,6 @@ const AddLocation = (props) => {
             variant="h3"
           >
             <Users /> &nbsp; CLIENT MANAGER  | &nbsp;  <span>ADD CLIENT</span>
-            {/* <sup>
-              <Tooltip title="Add Locaition" placement="right-start">
-                <HelpIcon />
-              </Tooltip>
-            </sup> */}
           </Typography>
           {isWelcomePage && (
             <RouterLink
@@ -1168,19 +798,7 @@ const AddLocation = (props) => {
                     variant="outlined"
                   />
                   <br /><br />
-                  {/* <TextField
-                     type="number"
-                      label="Location Phone Number"
-                      placeholder="Enter phone number"
-                      name="phone"
-                      className={brandClasses.shrinkTextField}
-                      onChange={handleChange}
-                      value={formState.phone || ''}
-                      required
-                      fullWidth
-                      InputLabelProps={{ shrink: true }}
-                      variant="outlined"
-                    /> */}
+                  
                   <NumberFormat
                     InputLabelProps={{ shrink: true }}
                     className={brandClasses.shrinkTextField}
@@ -1304,90 +922,7 @@ const AddLocation = (props) => {
                   variant="outlined"
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={4}>
-                <TextField
-                  type="text"
-                  label="Address 2"
-                  placeholder="Enter apt, suite, floor, etc"
-                  name="address2"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleChange}
-                  value={formState.address2 || ''}
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                />
-              </Grid> */}
-              {/* <Grid item xs={12} sm={4}>
-                <TextField
-                  type="text"
-                  label="County"
-                  placeholder="Enter County"
-                  name="county"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleChange}
-                  value={formState.county || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                />
-              </Grid> */}
-              {/* <Grid item xs={12} sm={4}>
-                <TextField
-                  type="text"
-                  label="City"
-                  placeholder="Enter city"
-                  name="city"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleChange}
-                  value={formState.city || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                />
-              </Grid> */}
-              {/* <Grid item xs={12} sm={2}>
-                <FormControl
-                  className={brandClasses.shrinkTextField}
-                  required
-                  fullWidth
-                  variant="outlined"
-                >
-                  <InputLabel shrink className={brandClasses.selectShrinkLabel}>State</InputLabel>
-                  <Select
-                    onChange={handleChange}
-                    label="State* "
-                    name="state"
-                    displayEmpty
-                    value={formState.state || ''}
-                  >
-                    <MenuItem value=''>
-                      <Typography className={brandClasses.selectPlaceholderGray}>Select State</Typography>
-                    </MenuItem>
-                    {getStates.map((state, index1) => (
-                      <MenuItem key={index1} value={state.text}>{state.text}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid> */}
-              {/* <Grid item xs={12} sm={2}>
-                <ZipCodeInput
-                  label="Zip Code"
-                  placeholder="Enter zip"
-                  name="zip_code"
-                  className={brandClasses.shrinkTextField}
-                  onChange={handleChange}
-                  value={formState.zip_code || ''}
-                  required
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                  style={{ height: 52 }}
-                />
-              </Grid> */}
-              {/* <Grid item xs={12} sm={4}></Grid> */}
+            
             </Grid>
             <div className={brandClasses.footerMessage}>
               {displayError ? <Alert
@@ -1400,15 +935,6 @@ const AddLocation = (props) => {
               >{displaySuccess}</Alert> : null}
             </div>
             <div className={brandClasses.footerButton}>
-              {/* <Button
-                className={brandClasses.button}
-                classes={{ disabled: brandClasses.buttonDisabled }}
-                disabled={loading}
-                type="submit"
-                style={{ borderRadius: '4px' }}
-              >
-                NEXT {loading ? <CircularProgress size={20} className={brandClasses.progressSpinner} /> : ''}
-              </Button> */}
               <TextButton
                 disabled={loading}
                 type="submit"
@@ -1804,7 +1330,7 @@ const AddLocation = (props) => {
             onSubmit={handleSubmit}
           >
             <Box margin="8px 0px 16px">
-              <Typography className={classes.subTitle}>Add interface</Typography>
+              <Typography className={classes.subTitle}>Add Interface</Typography>
             </Box>
             
             <Box className={classes.operationContainer}>
@@ -1845,14 +1371,17 @@ const AddLocation = (props) => {
                         xs={2}
                       >
                         <div className={classes.dayRow}>
-                          {day.day_name} &ensp;
-                          {expanded === `panel${day_index}`
-                            ? <img
+                          {day.name} &ensp;
+                          {
+                            expanded === `panel${day_index}`
+                              ? 
+                              <img
                                 src="/images/svg/chevron_blue_down.svg"
                                 style={{ height: 12, width: 18 }}
                                 alt=""
                               />
-                            : <img
+                              : 
+                              <img
                                 src="/images/svg/chevron_blue_right.svg"
                                 style={{ height: 18, width: 12 }}
                                 alt=""
@@ -1864,363 +1393,44 @@ const AddLocation = (props) => {
                         className={classes.timeText}
                         item
                         style={{ textAlign: 'center' }}
-                        xs={5}
+                        xs={7}
                       >
-                        {day.active
-                          ? day.time_slots.map((ts, x) =>
-                            ts.checked && (<Typography
-                              key={x}
-                              style={{ color: '#0F84A9' }}
-                            >{moment(ts.start_time, 'HH:mm').format('LT') + ' - ' + moment(ts.end_time, 'HH:mm').format('LT')}</Typography>)
-                          )
+                        <InterfaceBtnRow active={day.active}/>
+                        {/* {day.active
+                          ? <Typography>Valid</Typography>
                           : <Typography style={{ color: '#D8D8D8', fontWeight: '600' }}>Closed</Typography>
-                        }
+                        } */}
                       </Grid>
-                      <Grid item xs={5}>
-                        {day.active
-                          ? day.time_slots.map((item, x) =>
-                            item.checked && (
-                              <Grid
-                                alignItems="center"
-                                container
-                                direction="row"
-                                justify="center"
-                                spacing={1}
-                              >
-                                <Grid
-                                  item
-                                  sm={4}
-                                >
-                                  <Typography
-                                    align="left"
-                                    display="inline"
-                                    key={x}
-                                    style={{ color: '#043B5D' }}
-                                  >
-                                    <span style={{ color: '#DE50A4' }}>Vaccine:</span>
-                                  </Typography>
-                                  <Typography
-                                    align="left"
-                                    display="inline"
-                                  > {item.vaccine.checked ? item.vaccine.value : 0}</Typography>
-                                </Grid>
-                                <Grid
-                                  item
-                                  sm={4}
-                                >
-                                  <Typography
-                                    align="left"
-                                    display="inline"
-                                    key={x}
-                                    style={{ color: '#043B5D' }}
-                                  >
-                                    <span style={{ color: '#3ECCCD' }}>PCR:</span></Typography>
-                                  <Typography
-                                    align="left"
-                                    display="inline"
-                                  > {item.pcr.checked ? item.pcr.value : 0}</Typography></Grid>
-                                <Grid
-                                  item
-                                  sm={4}
-                                >
-                                  <Typography
-                                    align="left"
-                                    display="inline"
-                                    key={x}
-                                    style={{ color: '#043B5D' }}
-                                  >
-                                    <span style={{ color: '#FBC23C' }}>Antigen:</span></Typography>
-                                  <Typography
-                                    align="left"
-                                    display="inline"
-                                  > {item.antigen.checked ? item.antigen.value : 0}</Typography></Grid>
-                              </Grid>
-                            )
-                          )
-                          : <Typography style={{ color: '#D8D8D8', fontWeight: '600', textAlign: 'center' }}>- - -</Typography>
-                        }
+                      <Grid
+                        className={classes.timeText}
+                        item
+                        style={{ textAlign: 'center' }}
+                        xs={3}
+                      >
+                        <FormControlLabel
+                          control={<IOSSwitch
+                            checked={day.active}
+                            onChange={handleCheckChange}
+                            name={day.name}
+                          />}
+                          required
+                          labelPlacement="top"
+                          classes={{ label: classes.label }}
+                        />
                       </Grid>
+                      
                     </Grid>
                   </AccordionSummary>
                   <AccordionDetails style={{ backgroundColor: '#F1F6F8' }}>
                     <Grid container  >
-                      {day.time_slots.map((item, slot_index) => (
-                        <React.Fragment key={slot_index}>
-                          <Grid
-                            item
-                            xs={2}
-                          />
-                          <Grid
-                            item
-                            xs={1}
-                          />
-                          <Grid
-                            item
-                            xs={4}
-                          >
-                            {!item.edit
-                              ? <>
-                                <Grid
-                                  container
-                                  direction="row"
-                                >
-                                  <Grid
-                                    item
-                                    sm={8}
-                                  >
-                                    <Typography
-                                      className={classes.timeDuration}
-                                      variant="h5"
-                                    >
-                                      <Checkbox
-                                        checked={item.checked}
-                                        className={item.checked ? classes.daySlotCheckboxhecked : classes.daySlotCheckbox}
-                                        onChange={handleHoursCheckChange(day_index, slot_index)}
-                                      />
-                                      <span style={{ color: item.checked ? '#043B5D' : '#788081' }}>
-                                        {moment(item.displayStartTime).format('LT') + ' - ' + moment(item.displayEndTime).format('LT')}
-                                      </span>
-                                    </Typography>
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    sm={2}
-                                  >
-                                    <Typography
-                                      className={classes.timeDuration}
-                                      variant="h5"
-                                    >
-                                      <IconButton
-                                        classes={{ root: classes.editIcon }}
-                                        onClick={() => handleTimeSlotEdit(day_index, slot_index, true)}
-                                        style={{ padding: '4px' }}
-                                      >
-                                        <Edit />
-                                      </IconButton>
-                                    </Typography>
-                                  </Grid>
-
-                                  <Grid
-                                    item
-                                    sm={2}
-                                  >
-                                    <Typography
-                                      className={classes.timeDuration}
-                                      variant="h5"
-                                    >
-                                      <IconButton
-                                        classes={{ root: classes.editIcon }}
-                                        onClick={() => handleTimeSlotDelete(day_index, slot_index)}
-                                        style={{ padding: '4px' }}
-                                      >
-                                        <Delete />
-                                      </IconButton>
-                                    </Typography>
-                                  </Grid>
-                                </Grid>
-                              </>
-                              :
-                              <Grid
-                                alignItems="center"
-                                container
-                                direction="row"
-                                style={{ padding: '0 12px' }}
-                              >
-                                <MuiPickersUtilsProvider
-                                  libInstance={moment}
-                                  utils={MomentUtils}
-                                >
-                                  <KeyboardTimePicker
-                                    className={classes.timeField}
-                                    keyboardIcon={<AccessTimeIcon style={{ color: '#9B9B9B' }} />}
-                                    onChange={handleStartTimeChange(day_index, slot_index)}
-                                    value={item.displayStartTime}
-                                  />
-                                  <Typography
-                                    className={classes.operationDescription}
-                                    variant="h5"
-                                  >
-                                    {'-'}
-                                  </Typography>
-                                  <KeyboardTimePicker
-                                    className={classes.timeField}
-                                    keyboardIcon={<AccessTimeIcon style={{ color: '#9B9B9B' }} />}
-                                    onChange={handleEndTimeChange(day_index, slot_index)}
-                                    value={item.displayEndTime}
-                                  // minDate={day.displayStartTime}
-                                  />
-                                </MuiPickersUtilsProvider>
-                                <IconButton
-                                  classes={{ root: classes.editIcon }}
-                                  onClick={() => handleTimeSlotEdit(day_index, slot_index, false)}
-                                >
-                                  <CancelOutlinedIcon />
-                                </IconButton>
-                              </Grid>
-                            }
-                          </Grid>
-                          <Grid
-                            container
-                            item
-                            spacing={1}
-                            xs={5}
-                          >
-                            <Grid
-                              item
-                              xs={3}
-                            >
-                              <Typography
-                                className={operationErrorsState[day_index].timeSlotError[slot_index].vaccine ? classes.slotSubHeaderError : item.vaccine.checked ? classes.slotSubHeaderChecked : classes.slotSubHeader}
-                                style={{ fontWeight: '600' }}
-                              > Vaccine</Typography>
-                              <Typography
-                                className={classes.timeDuration}
-                                variant="h5"
-                              >
-                                <Checkbox
-                                  checked={item.vaccine.checked}
-                                  className={operationErrorsState[day_index].timeSlotError[slot_index].vaccine ? classes.daySlotCheckboxError : item.checked && item.vaccine.checked ? classes.daySlotCheckboxhecked : classes.daySlotCheckbox}
-                                  onChange={handleSlotTypeCheckbox(day_index, slot_index, 'vaccine')}
-                                />
-                                <FilledInput
-                                  aria-describedby="filled-weight-helper-text"
-                                  classes={{ root: operationErrorsState[day_index].timeSlotError[slot_index].vaccine ? classes.filledInputRootError : item.checked && item.vaccine.checked ? classes.filledInputRootChecked : classes.filledInputRoot }}
-                                  // endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
-                                  onChange={handleSlotTypeInput(day_index, slot_index, 'vaccine')}
-                                  required
-                                  value={item.vaccine.value}
-                                />
-                              </Typography>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={3}
-                            >
-                              <Typography
-                                className={operationErrorsState[day_index].timeSlotError[slot_index].pcr ? classes.slotSubHeaderError : item.pcr.checked ? classes.slotSubHeaderChecked : classes.slotSubHeader}
-                                style={{ fontWeight: '600' }}
-                              >PCR</Typography>
-                              <Typography
-                                className={classes.timeDuration}
-                                variant="h5"
-                              >
-                                <Checkbox
-                                  checked={item.pcr.checked}
-                                  className={operationErrorsState[day_index].timeSlotError[slot_index].pcr ? classes.daySlotCheckboxError : item.checked && item.pcr.checked ? classes.daySlotCheckboxhecked : classes.daySlotCheckbox}
-                                  onChange={handleSlotTypeCheckbox(day_index, slot_index, 'pcr')}
-                                />
-                                <FilledInput
-                                  aria-describedby="filled-weight-helper-text"
-                                  classes={{ root: operationErrorsState[day_index].timeSlotError[slot_index].pcr ? classes.filledInputRootError : item.checked && item.pcr.checked ? classes.filledInputRootChecked : classes.filledInputRoot }}
-                                  // endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
-                                  onChange={handleSlotTypeInput(day_index, slot_index, 'pcr')}
-                                  value={item.pcr.value}
-                                />
-                              </Typography>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={3}
-                            >
-                              <Typography
-                                className={operationErrorsState[day_index].timeSlotError[slot_index].antigen ? classes.slotSubHeaderError : item.antigen.checked ? classes.slotSubHeaderChecked : classes.slotSubHeader}
-                                style={{ fontWeight: '600' }}
-                              >Antigen</Typography>
-                              <Typography
-                                className={classes.timeDuration}
-                                variant="h5"
-                              >
-                                <Checkbox
-                                  checked={item.antigen.checked}
-                                  className={operationErrorsState[day_index].timeSlotError[slot_index].antigen ? classes.daySlotCheckboxError : item.checked && item.antigen.checked ? classes.daySlotCheckboxhecked : classes.daySlotCheckbox}
-                                  onChange={handleSlotTypeCheckbox(day_index, slot_index, 'antigen')}
-                                />
-                                <FilledInput
-                                  aria-describedby="filled-weight-helper-text"
-                                  classes={{ root: operationErrorsState[day_index].timeSlotError[slot_index].antigen ? classes.filledInputRootError : item.checked && item.antigen.checked ? classes.filledInputRootChecked : classes.filledInputRoot }}
-                                  // endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
-                                  onChange={handleSlotTypeInput(day_index, slot_index, 'antigen')}
-                                  value={item.antigen.value}
-                                />
-                              </Typography>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={3}
-                            >
-                              <Typography
-                                align="right"
-                                className={classes.slotSubHeaderChecked}
-                                style={{ textAlign: 'start', marginLeft: '0px', fontSize: '8px', }}
-                              >Slot Difference</Typography>
-                              <Select
-                                displayEmpty
-                                label="Difference"
-                                name="Slot Difference"
-                                onChange={handleSlotDifferenceChange(day_index, slot_index)}
-                                style={{ paddingRight: '18px', paddingLeft: '12px', border: '1px solid #9B9B9B' }}
-                                value={item.time_slot_difference || ''}
-                              >
-                                <MenuItem value="">
-                                  <Typography className={brandClasses.selectPlaceholder}>Select Slot Difference</Typography>
-                                </MenuItem>
-                                <MenuItem value="5">5</MenuItem>
-                                <MenuItem value="10">10</MenuItem>
-                                <MenuItem value="15">15</MenuItem>
-                                <MenuItem value="20">20</MenuItem>
-                                <MenuItem value="30">30</MenuItem>
-                              </Select>
-                            </Grid>
-                            <Typography
-                              className={classes.slotSubHeaderErrorContent}
-                              variant="h5"
-                            >{operationErrorsState[day_index].timeSlotError[slot_index].error}</Typography>
-                          </Grid>
-                        </React.Fragment>
-                      ))}
+                      
                       <Grid
                         item
-                        xs={3}
-                      />
-                      <Grid
-                        item
-                        xs={4}
+                        xs={12}
                       >
-                        <FormControlLabel
-                          className={!day.active ? classes.dayCheckbox : classes.dayCheckboxChecked}
-                          control={<Checkbox
-                            checked={!day.active}
-                            onChange={handleClosedChange(day_index)}
-                                   />}
-                          label="Closed"
-                        />
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                       </Grid>
-                      <Grid
-                        item
-                        xs={5}
-                      />
-                      <Grid
-                        item
-                        xs={3}
-                      />
-                      <Grid
-                        item
-                        xs={4}
-                      >
-                        <Button
-                          className={classes.button}
-                          onClick={addNewTimeSlot(day_index)}
-                          startIcon={<AddIcon />}
-                          style={{ marginLeft: '6px' }}
-                        >
-                          Add another time slot
-                        </Button>
-
-                      </Grid>
-                      <Grid
-                        item
-                        xs={5}
-                      />
+                      
                     </Grid>
                   </AccordionDetails>
                 </Accordion>
@@ -2287,9 +1497,7 @@ AddLocation.propTypes = {
   addLocation: PropTypes.func.isRequired,
   uploadImage: PropTypes.func.isRequired,
   clearLocations: PropTypes.func.isRequired,
-  getInventoryAvailable: PropTypes.func.isRequired
+  
 };
 
-export default connect(null, { addLocation, uploadImage, clearLocations,
-  //  getInventoryAvailable 
-})(AddLocation);
+export default connect(null, { addLocation, uploadImage, clearLocations})(AddLocation);
